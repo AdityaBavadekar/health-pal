@@ -1,6 +1,10 @@
 import express from "express";
 import { configDotenv } from "dotenv";
 import connectDB from "./config/db.js";
+import { router as doctorsRouter } from "./routes/doctors.js";
+import { router as patientsRouter } from "./routes/patients.js";
+import { router as hospitalsRouter } from "./routes/hospitals.js";
+
 
 configDotenv();
 
@@ -18,6 +22,10 @@ app.get('/api', (req, res) => {
         message: "API working"
     })
 })
+
+app.use('/api/doctors', doctorsRouter);
+app.use('/api/patients', patientsRouter);
+app.use('/api/hospitals', hospitalsRouter);
 
 // Listen
 const port = process.env.PORT || 5000;
