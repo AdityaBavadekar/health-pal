@@ -1,4 +1,4 @@
-import MedicineConsumptions from "../models/MedicineConsumptions";
+import MedicineConsumptions from "../models/MedicineConsumptions.js";
 
 function getMedicineConsumptionReport(req, res) {
     if (!req.user) {

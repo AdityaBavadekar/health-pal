@@ -1,11 +1,25 @@
-import Appoitment from '../models/appointment.js';
+import Appoitment from '../models/Appointment.js';
 
 function getAllAppointments(req, res) {
-    const hospitalId = req.user._id;
-    if (!hospitalId) {
+    const hospitalId = req.user.id;
+    if (!hospitalId || req.user.type != "Hospital") {
         return res.status(401).json({ message: "Unauthorized" });
     }
     Appoitment.find({ hospitalId })
+        .then(appointments => {
+            res.json(appointments);
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        });       
+}
+
+function getAllAppointmentsForPatient(req, res) {
+    const patientId = req.user.id;
+    if (!patientId || req.user.type != "Patient") {
+        return res.status(401).json({ message: "Unauthorized" });
+    }
+    Appoitment.find({ patientId })
         .then(appointments => {
             res.json(appointments);
         })
@@ -43,13 +57,16 @@ function cancelAppointment(req, res) {
 }
 
 function addAppointment(req, res) {
+    if (req.user.type != "Patient") {
+        return res.status(401).json({ message: "Unauthorized" });
+    }
     const { date, startTime, endTime, hospitalId } = req.body;
     if (!date || !startTime || !endTime || !hospitalId) {
         return res.status(400).json({ message: "Please provide all the fields" });
     }
-    const patiendId = req.user._id;
+    const patientId = req.user.id;
     const newAppointment = new Appoitment({
-        patiendId,
+        patientId,
         hospitalId,
         date,
         startTime,

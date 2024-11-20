@@ -21,6 +21,9 @@ function getDoctorById(req, res) {
 }
 
 function addDoctor(req, res) {
+  if (req.user.type != "Hospital") {
+    return res.status(403).json({ message: "Forbidden" });
+  }
   const doctor = new Doctor(req.body);
   doctor.save()
     .then(doctor => {
@@ -32,6 +35,9 @@ function addDoctor(req, res) {
 }
 
 function updateDoctor(req, res) {
+  if (req.user.type != "Hospital") {
+    return res.status(403).json({ message: "Forbidden" });
+  }
   const { id } = req.params;
   Doctor.findByIdAndUpdate(
     id,

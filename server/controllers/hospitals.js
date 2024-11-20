@@ -33,6 +33,9 @@ function addHospital(req, res) {
 }
 
 function updateHospital(req, res) {
+    if (req.user.type != "Hospital") {
+      return res.status(403).json({ message: "Forbidden" });
+    }
     const { id } = req.params;
     Hospital.findByIdAndUpdate(
         id, 

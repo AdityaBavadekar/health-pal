@@ -4,9 +4,9 @@ import { getMedicineConsumptionReport, markAsTaken } from '../controllers/medici
 
 const router = Router();
 
-router.get("/session/:id", getMedicineSessionById);
+router.get("/sessions/:id", getMedicineSessionById);
 router.get("/sessions/", getAllMedicineSessions);
-router.post("/session/", addMedicineSession);
+router.post("/sessions/", addMedicineSession);
 router.get("/consumption-report/", getMedicineConsumptionReport);
 router.post("/mark-as-taken/", markAsTaken);
 

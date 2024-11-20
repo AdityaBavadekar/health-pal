@@ -2,9 +2,6 @@ import MedicineSession from "../models/medicineSession.js";
 
 function getMedicineSessionById(req, res) {
     const { id } = req.params;
-    if (!req.user) {
-        return res.status(401).json({ message: "Unauthorized" });
-    }
     MedicineSession.findById(id)
         .then(medicineSession => {
             if (!medicineSession) {
@@ -18,9 +15,6 @@ function getMedicineSessionById(req, res) {
 }
 
 function getAllMedicineSessions(req, res) {
-    if (!req.user) {
-        return res.status(401).json({ message: "Unauthorized" });
-    }
     const patientId = req.user.id;
     MedicineSession.find({ patientId })
         .then(medicineSessions => {
@@ -32,9 +26,6 @@ function getAllMedicineSessions(req, res) {
 }
 
 function addMedicineSession(req, res) {
-    if (!req.user) {
-        return res.status(401).json({ message: "Unauthorized" });
-    }
     const doctorId = req.user.id;
     const { patientId, items } = req.body;
     if (!patientId || !items) {

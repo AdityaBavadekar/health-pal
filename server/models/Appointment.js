@@ -13,10 +13,6 @@ const Appointment = new mongoose.Schema({
         type: String,
         required: false
     },
-    date: {
-        type: String,
-        required: true
-    },
     startTime: {
         type: String,
         required: true
@@ -25,6 +21,6 @@ const Appointment = new mongoose.Schema({
         type: String,
         required: true
     }
-})
+}, { timestamps: true });
 
 export default mongoose.model("Appointment", Appointment);
