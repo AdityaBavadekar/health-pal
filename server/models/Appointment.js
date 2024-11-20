@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const Appointment = new mongoose.Schema({
-    userId: {
+    patientId: {
         type: String,
         required: true
     },

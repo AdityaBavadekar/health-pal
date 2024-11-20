@@ -4,6 +4,7 @@ import connectDB from "./config/db.js";
 import { router as doctorsRouter } from "./routes/doctors.js";
 import { router as patientsRouter } from "./routes/patients.js";
 import { router as hospitalsRouter } from "./routes/hospitals.js";
+import { router as medicinesRouter } from "./routes/medicines.js";
 
 configDotenv();
 
@@ -25,6 +26,7 @@ app.get('/api', (req, res) => {
 app.use('/api/doctors', doctorsRouter);
 app.use('/api/patients', patientsRouter);
 app.use('/api/hospitals', hospitalsRouter);
+app.use('/api/medicines', medicinesRouter);
 
 // Listen
 const port = process.env.PORT || 5000;
