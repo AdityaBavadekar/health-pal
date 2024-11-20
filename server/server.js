@@ -4,7 +4,10 @@ import connectDB from "./config/db.js";
 import { router as doctorsRouter } from "./routes/doctors.js";
 import { router as patientsRouter } from "./routes/patients.js";
 import { router as hospitalsRouter } from "./routes/hospitals.js";
-
+import { DoctorLogin, DoctorRegister } from "./controllers/authcontroller.js";
+import { HospitalRegister, HospitalLogin } from './controllers/authcontroller.js';
+import { PatientLogin, PatientRegister } from './controllers/authcontroller.js';
+import { authMiddleware } from "./controllers/authmiddleware.js";
 configDotenv();
 
 const app = express();
@@ -21,10 +24,15 @@ app.get('/api', (req, res) => {
     message: "API working"
   })
 })
-
-app.use('/api/doctors', doctorsRouter);
-app.use('/api/patients', patientsRouter);
-app.use('/api/hospitals', hospitalsRouter);
+app.post("/api/doctors/register", DoctorRegister);
+app.post("/api/doctors/login", DoctorLogin);
+app.post('/api/hospitals/register', HospitalRegister);
+app.post('/api/hospitals/login', HospitalLogin);
+app.post('/api/patients/register', PatientRegister);
+app.post('/api/patients/login', PatientLogin);
+app.use('/api/doctors', authMiddleware, doctorsRouter);
+app.use('/api/patients', authMiddleware, patientsRouter);
+app.use('/api/hospitals', authMiddleware, hospitalsRouter);
 
 // Listen
 const port = process.env.PORT || 5000;
