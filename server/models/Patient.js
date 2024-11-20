@@ -5,6 +5,10 @@ const Patient = new mongoose.Schema({
         type: String,
         required: true
     },
+    username: {
+        type: String,
+        required: true
+    },
     email: {
         type: String,
         required: true
@@ -19,7 +23,8 @@ const Patient = new mongoose.Schema({
     },
     address: {
         type: String,
-        required: false
+        required: false,
+        default: ""
     },
     mobileNumber: {
         type: String,
@@ -27,51 +32,61 @@ const Patient = new mongoose.Schema({
     },
     weight: {
         type: Number, // In SI Unit
-        required: false
+        required: false,
+        default: -1
     },
     bloodSign: {
         type: String,
         enum: ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'],
-        required: false
+        required: false,
+        default: 'A+'
     },
     familyDoctor: {
-        type: Number,
-        required: false
+        type: String,
+        required: false,
+        default: ""
     },
     emergencyNumber: {
         type: String,
-        required: false
+        required: false,
+        default: ""
     },
-    diseases: [{
-            id: {
-                type: Number,
-                required: true,
-            },
-            name : {
-                type: Number,
-                required: true,
+    diseases: {
+        type:[
+            {
+                name : {
+                    type: String,
+                    required: true,
+                }
             }
-    }],
-    operations: [{
-            id: {
-                type: Number,
-                required: true,
-            },
-            name : {
-                type: Number,
-                required: true,
+        ],
+        required: false,
+        default: []
+    },
+    operations: {
+        type:[
+            {
+                name : {
+                    type: Number,
+                    required: true,
+                }
             }
-    }],
-    alergies: [{
-            id: {
-                type: Number,
-                required: true,
-            },
-            name : {
-                type: Number,
-                required: true,
+        ],
+        required: false,
+        default: []
+    },
+    alergies: {
+        type:[
+            {
+                name : {
+                    type: Number,
+                    required: true,
+                }
             }
-    }]
+        ],
+        required: false,
+        default: []
+    }
 })
 
 export default mongoose.model("Patient", Patient);
