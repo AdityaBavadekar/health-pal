@@ -8,4 +8,5 @@ router.get("/:id", getDoctorById);
 router.post("/", addDoctor);
 router.put("/:id", updateDoctor);
 
+
 export { router };

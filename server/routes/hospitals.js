@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import { getHospitalById, addHospital, updateHospital, getAllHospitals } from '../controllers/hospitals.js';
-
 const router = Router();
 
 router.get('/', getAllHospitals);
