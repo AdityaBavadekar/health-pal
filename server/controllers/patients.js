@@ -24,6 +24,9 @@ function getPatientById(req, res) {
 }
 
 function addPatient(req, res) {
+    if (req.user.type != "Hospital") {
+      return res.status(403).json({ message: "Forbidden" });
+    }
     const patient = new Patient(req.body);
     patient.save()
         .then(patient => {
