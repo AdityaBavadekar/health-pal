@@ -81,4 +81,4 @@ function addAppointment(req, res) {
         });
 }
 
-export { getAllAppointments, getAppointmentById, addAppointment, cancelAppointment };
+export { getAllAppointments, getAllAppointmentsForPatient, getAppointmentById, addAppointment, cancelAppointment };
