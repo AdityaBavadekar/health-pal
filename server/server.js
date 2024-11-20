@@ -5,6 +5,10 @@ import { router as doctorsRouter } from "./routes/doctors.js";
 import { router as patientsRouter } from "./routes/patients.js";
 import { router as hospitalsRouter } from "./routes/hospitals.js";
 import { router as medicinesRouter } from "./routes/medicines.js";
+import { DoctorLogin, DoctorRegister } from "./controllers/authcontroller.js";
+import { HospitalRegister, HospitalLogin } from './controllers/authcontroller.js';
+import { PatientLogin, PatientRegister } from './controllers/authcontroller.js';
+import { authMiddleware } from "./controllers/authmiddleware.js";
 
 configDotenv();
 
@@ -23,10 +27,17 @@ app.get('/api', (req, res) => {
   })
 })
 
-app.use('/api/doctors', doctorsRouter);
-app.use('/api/patients', patientsRouter);
-app.use('/api/hospitals', hospitalsRouter);
-app.use('/api/medicines', medicinesRouter);
+app.post("/api/doctors/register", DoctorRegister);
+app.post("/api/doctors/login", DoctorLogin);
+app.post('/api/hospitals/register', HospitalRegister);
+app.post('/api/hospitals/login', HospitalLogin);
+app.post('/api/patients/register', PatientRegister);
+app.post('/api/patients/login', PatientLogin);
+
+app.use('/api/doctors', authMiddleware, doctorsRouter);
+app.use('/api/patients', authMiddleware, patientsRouter);
+app.use('/api/hospitals', authMiddleware, hospitalsRouter);
+app.use('/api/medicines', authMiddleware, medicinesRouter);
 
 // Listen
 const port = process.env.PORT || 5000;
