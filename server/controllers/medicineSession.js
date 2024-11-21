@@ -1,4 +1,4 @@
-import MedicineSession from "../models/medicineSession.js";
+import MedicineSession from "../models/MedicineSession.js";
 
 function getMedicineSessionById(req, res) {
     const { id } = req.params;
