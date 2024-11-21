@@ -158,7 +158,7 @@ function DoctorLogin(req, res) {
 }
 
 function HospitalRegister(req, res) {
-  const { name, email, address, mobileNumber, licenseData, password } = req.body;
+  const { name, email, address, mobileNumber, licenseData, password, doctorIds } = req.body;
   if (!name || !email || !address || !mobileNumber || !licenseData || !password) {
     return res.status(400).json({ message: "Please provide all the fields" });
   }
@@ -175,7 +175,8 @@ function HospitalRegister(req, res) {
             password: hashedPassword,
             address,
             mobileNumber,
-            licenseData
+            licenseData,
+            doctorIds
           });
 
           newHospital.save()
