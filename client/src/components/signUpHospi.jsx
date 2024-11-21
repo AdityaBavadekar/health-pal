@@ -12,26 +12,27 @@ import { Button } from "@/components/ui/button";
 import { z } from "zod";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import ApiConstants from "../constants/apiConstants";
+import { useNavigate } from "react-router-dom";
 
 const formSchema = z.object({
-  fullName: z.string().min(2, {
-    message: "Full name must be at least 2 characters.",
+  name: z.string().min(2, {
+    message: "Name must be at least 2 characters.",
   }),
   email: z.string().email({
     message: "Invalid email address.",
   }),
-  address: z.string(),
-  mobileNumber: z
-    .string()
-    .min(10, {
-      message: "Mobile number must be at least 10 digits.",
-    })
-    .max(10, { message: "Mobile number must be at most 10 digits." }),
-  licenseData: z
-    .string()
-    .min(2, { message: "License Data must be at least 2 characters." }),
   password: z.string().min(6, {
     message: "Password must be at least 6 characters.",
+  }),
+  address: z.string().min(1, {
+    message: "Address is required.",
+  }),
+  mobileNumber: z.string().length(10, {
+    message: "Mobile number must be exactly 10 digits.",
+  }),
+  licenseData: z.string().min(2, {
+    message: "License data must be at least 2 characters.",
   }),
 });
 
@@ -40,12 +41,38 @@ const SignupHospital = () => {
     resolver: zodResolver(formSchema),
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const navigate = useNavigate();
+
+  const onSubmit = async (data) => {
+    try {
+      const response = await fetch(ApiConstants.API_REGISTER_HOSPITAL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to register hospital.");
+      }
+
+      const responseData = await response.json();
+      Cookies.set("jwt", responseData.token, {
+        secure: true,
+        sameSite: "strict",
+        expires: 1,
+      });
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Error:", error.message);
+      alert(`Error: ${error.message}`);
+    }
   };
 
   return (
-    <div className="w-full flex flex-col justify-center items-center bg-emerald-100 p-6">
+    <div className="w-full flex flex-col justify-center items-center bg-emerald-100 p-3">
       <div className="bg-white shadow-md rounded-lg p-8 w-full">
         <h1 className="text-3xl font-bold text-emerald-600 mb-6">
           Hospital Signup
@@ -57,7 +84,7 @@ const SignupHospital = () => {
           >
             <FormField
               control={form.control}
-              name="fullName"
+              name="name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Full Name</FormLabel>
@@ -132,6 +159,19 @@ const SignupHospital = () => {
                   <FormLabel>Password</FormLabel>
                   <FormControl>
                     <Input type="password" placeholder="******" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="licenseData"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>LicenseData</FormLabel>
+                  <FormControl>
+                    <Input placeholder="licenseData" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

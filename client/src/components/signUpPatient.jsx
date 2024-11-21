@@ -20,35 +20,25 @@ import {
 import { z } from "zod";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import ApiConstants from "../constants/apiConstants";
+import { useNavigate } from "react-router-dom";
 
 const formSchema = z.object({
-  fullName: z.string().min(2, {
-    message: "Full name must be at least 2 characters.",
-  }),
-  email: z.string().email({
-    message: "Invalid email address.",
-  }),
+  name: z.string().min(2, "Full name must be at least 2 characters."),
+  email: z.string().email("Invalid email address."),
+  password: z.string().min(6, "Password must be at least 6 characters."),
+  dob: z.string().nonempty("Date of birth is required."),
+  gender: z.string().nonempty("Gender is required."),
   mobileNumber: z
     .string()
-    .min(10, {
-      message: "Mobile number must be at least 10 digits.",
-    })
-    .max(10, { message: "Mobile number must be at most 10 digits." }),
-  country: z.string().min(2, {
-    message: "Country must be at least 2 characters.",
-  }),
-  provience: z.string(),
-  city: z.string(),
-  address: z.string().optional(),
-  password: z.string().min(6, {
-    message: "Password must be at least 6 characters.",
-  }),
-  age: z.string().min(1, {
-    message: "Invalid Age",
-  }),
-  gender: z.string(),
+    .length(10, "Mobile number must be exactly 10 digits."),
   weight: z.string().optional(),
-  bloodSign: z.string().optional(),
+  bloodSign: z.string().nonempty("Blood type is required."),
+  emergencyNumber: z.string().optional(),
+  familyDoctor: z.string().optional(),
+  diseases: z.array(z.string()).optional(),
+  operations: z.array(z.string()).optional(),
+  allergies: z.array(z.string()).optional(),
 });
 
 const SignupPatient = () => {
@@ -56,12 +46,35 @@ const SignupPatient = () => {
     resolver: zodResolver(formSchema),
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const navigate = useNavigate();
+  const onSubmit = async (data) => {
+    try {
+      const response = await fetch(ApiConstants.API_REGISTER_PATIENT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to register patient.");
+      }
+
+      const responseData = await response.json();
+      Cookies.set("jwt", responseData.token, {
+        secure: true,
+        sameSite: "strict",
+        expires: 1,
+      });
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
-    <div className="w-full flex flex-col justify-center items-center bg-emerald-100 p-6">
+    <div className="w-full flex flex-col justify-center items-center bg-emerald-100 p-3">
       <div className="bg-white shadow-md rounded-lg p-8 w-full">
         <h1 className="text-3xl font-bold text-emerald-600 mb-6">
           Patient Signup
@@ -73,7 +86,7 @@ const SignupPatient = () => {
           >
             <FormField
               control={form.control}
-              name="fullName"
+              name="name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Full Name</FormLabel>
@@ -99,81 +112,12 @@ const SignupPatient = () => {
             />
             <FormField
               control={form.control}
-              name="mobileNumber"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Mobile Number</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      placeholder="Mobile Number"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="country"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Country</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Country" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="provience"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Province</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Province" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="city"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>City</FormLabel>
-                  <FormControl>
-                    <Input placeholder="City" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="address"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Address (Optional)</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Address" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
               name="password"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="******" {...field} />
+                    <Input type="password" placeholder="Password" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -181,12 +125,12 @@ const SignupPatient = () => {
             />
             <FormField
               control={form.control}
-              name="age"
+              name="dob"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Age</FormLabel>
+                  <FormLabel>Date of Birth</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="Age" {...field} />
+                    <Input type="date" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -199,7 +143,7 @@ const SignupPatient = () => {
                 <FormItem>
                   <FormLabel>Gender</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
-                    <SelectTrigger className="w-full">
+                    <SelectTrigger>
                       <SelectValue placeholder="Select Gender" />
                     </SelectTrigger>
                     <SelectContent>
@@ -214,12 +158,12 @@ const SignupPatient = () => {
             />
             <FormField
               control={form.control}
-              name="weight"
+              name="mobileNumber"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Weight (Optional)</FormLabel>
+                  <FormLabel>Mobile Number</FormLabel>
                   <FormControl>
-                    <Input placeholder="weight" {...field} />
+                    <Input type="tel" placeholder="Mobile Number" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -227,23 +171,122 @@ const SignupPatient = () => {
             />
             <FormField
               control={form.control}
-              name="bloodSign"
+              name="weight"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Bloodsign (Optional)</FormLabel>
+                  <FormLabel>Weight</FormLabel>
                   <FormControl>
-                    <Input placeholder="bloodSign" {...field} />
+                    <Input placeholder="Weight (kg)" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <div className="col-span-1 md:col-span-2">
+            <Controller
+              control={form.control}
+              name="bloodSign"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Blood Type</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Blood Type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="A+">A+</SelectItem>
+                      <SelectItem value="A-">A-</SelectItem>
+                      <SelectItem value="B+">B+</SelectItem>
+                      <SelectItem value="B-">B-</SelectItem>
+                      <SelectItem value="O+">O+</SelectItem>
+                      <SelectItem value="O-">O-</SelectItem>
+                      <SelectItem value="AB+">AB+</SelectItem>
+                      <SelectItem value="AB-">AB-</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="emergencyNumber"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Emergency Number</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Emergency Contact" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="familyDoctor"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Family Doctor</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Doctor Name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="diseases"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Diseases</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Diseases (comma-separated)"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="operations"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Operations</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Operations (comma-separated)"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="allergies"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Allergies</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Allergies (comma-separated)"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="col-span-2">
               <Button
                 type="submit"
                 className="bg-emerald-600 text-white w-full"
               >
-                Submit
+                Register
               </Button>
             </div>
           </form>

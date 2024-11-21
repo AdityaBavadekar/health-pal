@@ -2,7 +2,6 @@ import React from "react";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -20,9 +19,11 @@ import {
 import { z } from "zod";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import ApiConstants from "../constants/apiConstants";
+import { useNavigate } from "react-router-dom";
 
 const formSchema = z.object({
-  fullName: z.string().min(2, {
+  name: z.string().min(2, {
     message: "Full name must be at least 2 characters.",
   }),
   email: z.string().email({
@@ -30,24 +31,24 @@ const formSchema = z.object({
   }),
   mobileNumber: z
     .string()
-    .min(10, {
-      message: "Mobile number must be at least 10 digits.",
-    })
-    .max(10, { message: "Mobile number must be at most 10 digits." }),
-  country: z.string().min(2, {
-    message: "Country must be at least 2 characters.",
+    .regex(/^\d{10}$/, "Mobile number must be exactly 10 digits."),
+  address: z.string().min(5, {
+    message: "Address must be at least 5 characters.",
   }),
-  provience: z.string(),
-  city: z.string(),
-  address: z.string().optional(),
   password: z.string().min(6, {
     message: "Password must be at least 6 characters.",
   }),
-  age: z.string().min(1, {
-    message: "Invalid Age",
+  dob: z.string().refine(
+    (value) => {
+      const date = new Date(value);
+      return !isNaN(date.getTime());
+    },
+    { message: "Invalid date of birth." }
+  ),
+  gender: z.enum(["Male", "Female", "Other"], {
+    message: "Gender is required.",
   }),
-  gender: z.string(),
-  Degree: z.string().min(2, {
+  degree: z.string().min(2, {
     message: "Degree must be at least 2 characters.",
   }),
   specialization: z.string().min(2, {
@@ -56,21 +57,61 @@ const formSchema = z.object({
   experience: z.string().min(2, {
     message: "Experience must be at least 2 characters.",
   }),
+  licenseData: z.string().min(2, {
+    message: "License data must be at least 2 characters.",
+  }),
 });
 
 const SignupDoctor = () => {
   const form = useForm({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      mobileNumber: "",
+      address: "",
+      password: "",
+      dob: "",
+      gender: "",
+      degree: "",
+      specialization: "",
+      experience: "",
+      licenseData: "",
+    },
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const navigate = useNavigate();
+
+  const onSubmit = async (data) => {
+    try {
+      const response = await fetch(ApiConstants.API_REGISTER_DOCTOR, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to register doctor.");
+      }
+
+      const responseData = await response.json();
+      Cookies.set("jwt", responseData.token, {
+        secure: true,
+        sameSite: "strict",
+        expires: 1,
+      });
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
-    <div className="w-full flex flex-col justify-center items-center bg-emerald-100 p-6">
-      <div className="bg-white shadow-md rounded-lg p-8 w-full">
-        <h1 className="text-3xl font-bold text-emerald-600 mb-6">
+    <div className="w-full flex flex-col justify-center items-center bg-emerald-100 p-3">
+      <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-4xl">
+        <h1 className="text-3xl font-bold text-emerald-600 mb-6 text-center">
           Doctor Signup
         </h1>
         <Form {...form}>
@@ -80,12 +121,12 @@ const SignupDoctor = () => {
           >
             <FormField
               control={form.control}
-              name="fullName"
+              name="name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Full Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Full Name" {...field} />
+                    <Input placeholder="Enter your full name" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -98,7 +139,11 @@ const SignupDoctor = () => {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input type="email" placeholder="Email" {...field} />
+                    <Input
+                      type="email"
+                      placeholder="Enter your email"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -112,49 +157,10 @@ const SignupDoctor = () => {
                   <FormLabel>Mobile Number</FormLabel>
                   <FormControl>
                     <Input
-                      type="number"
-                      placeholder="Mobile Number"
+                      type="text"
+                      placeholder="Enter your mobile number"
                       {...field}
                     />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="country"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Country</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Country" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="provience"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Province</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Province" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="city"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>City</FormLabel>
-                  <FormControl>
-                    <Input placeholder="City" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -165,9 +171,9 @@ const SignupDoctor = () => {
               name="address"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Address (Optional)</FormLabel>
+                  <FormLabel>Address</FormLabel>
                   <FormControl>
-                    <Input placeholder="Address" {...field} />
+                    <Input placeholder="Enter your address" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -180,7 +186,11 @@ const SignupDoctor = () => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="******" {...field} />
+                    <Input
+                      type="password"
+                      placeholder="Enter your password"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -188,12 +198,12 @@ const SignupDoctor = () => {
             />
             <FormField
               control={form.control}
-              name="age"
+              name="dob"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Age</FormLabel>
+                  <FormLabel>Date of Birth</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="Age" {...field} />
+                    <Input type="date" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -221,12 +231,12 @@ const SignupDoctor = () => {
             />
             <FormField
               control={form.control}
-              name="Degree"
+              name="degree"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Degree</FormLabel>
                   <FormControl>
-                    <Input placeholder="Degree" {...field} />
+                    <Input placeholder="Enter your degree" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -239,7 +249,7 @@ const SignupDoctor = () => {
                 <FormItem>
                   <FormLabel>Specialization</FormLabel>
                   <FormControl>
-                    <Input placeholder="Specialization" {...field} />
+                    <Input placeholder="Enter your specialization" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -252,7 +262,23 @@ const SignupDoctor = () => {
                 <FormItem>
                   <FormLabel>Experience</FormLabel>
                   <FormControl>
-                    <Input placeholder="Experience" {...field} />
+                    <Input placeholder="Enter your experience" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="licenseData"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>License Data</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Enter your license details"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
