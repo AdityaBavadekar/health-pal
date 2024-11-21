@@ -5,10 +5,10 @@ const Home = () => {
     <div className="w-full">
 
       <section 
-        className="h-screen bg-[url('img_srcs/home.jpeg')] bg-cover bg-center bg-fixed flex items-center justify-center">
+        className="h-screen bg-[url('assets/img_srcs/home.png')] bg-cover bg-center bg-fixed flex items-center justify-center">
 <div className="text-center text-white p-8 max-w-2xl">
-  <h1 className="text-6xl font-bold mb-6">Health Pal</h1>
-  <p className="text-xl mb-8">Your Health, Our Priority</p>
+  <h1 className="text-6xl font-bold mb-6 text-black">Health Pal</h1>
+  <p className="text-xl mb-8 text-black">Your Health, Our Priority</p>
   <div className="flex justify-center gap-8">
     <button className="bg-emerald-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-emerald-600 transition duration-300 w-40"> {/* Added w-40 for fixed width */}
       Sign Up
