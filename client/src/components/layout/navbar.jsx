@@ -1,19 +1,5 @@
-import {
-  Bell,
-  Calendar,
-  File,
-  Home,
-  Hospital,
-  Icon,
-  Inbox,
-  Search,
-  Settings,
-  SidebarCloseIcon,
-  SidebarOpenIcon,
-  Text,
-  User,
-} from "lucide-react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { jwtDecode } from "jwt-decode";
 import {
   Sidebar,
   SidebarContent,
@@ -21,44 +7,90 @@ import {
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuButton,
   SidebarProvider,
   SidebarHeader,
   SidebarFooter,
 } from "@/components/ui/sidebar";
+import {
+  Home,
+  Bell,
+  File,
+  Calendar,
+  Text,
+  Search,
+  Settings,
+  Hospital,
+  User,
+  SidebarCloseIcon,
+  SidebarOpenIcon,
+} from "lucide-react";
+import Cookies from "js-cookie";
 
-const items = [
-  { title: "Home", url: "#", icon: Home },
-  { title: "Reminder", url: "#", icon: Bell },
-  { title: "Health Records", url: "#", icon: File },
-  { title: "Appointments", url: "#", icon: Calendar },
-  { title: "AI Chat", url: "#", icon: Text },
-  { title: "Search", url: "#", icon: Search },
-  { title: "Settings", url: "#", icon: Settings },
+const PatientItems = [
+  { title: "Home", url: "/dashboard", icon: Home },
+  { title: "Reminder", url: "/reminder", icon: Bell },
+  { title: "Health Records", url: "/health-records", icon: File },
+  { title: "Appointments", url: "/appointments", icon: Calendar },
+  { title: "AI Chat", url: "/ai-chat", icon: Text },
+  { title: "Search", url: "/search", icon: Search },
+  { title: "Settings", url: "/settings", icon: Settings },
+];
+
+const DoctorItems = [
+  { title: "Home", url: "/dashboard", icon: Home },
+  { title: "Appointments", url: "/home", icon: Calendar },
+  { title: "Search", url: "/search", icon: Search },
+  { title: "Settings", url: "/settings", icon: Settings },
+];
+
+const HospitalItems = [
+  { title: "Home", url: "/dashboard", icon: Home },
+  { title: "Appointments", url: "/home", icon: Calendar },
+  { title: "Search", url: "/search", icon: Search },
+  { title: "Settings", url: "/settings", icon: Settings },
 ];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const token = localStorage.getItem("token");
+  const [userType, setUserType] = useState(null);
+  const token = Cookies.get("jwt");
+
+  useEffect(() => {
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setUserType(decodedToken.type);
+    }
+  }, [token]);
+
+  const getSidebarItems = () => {
+    switch (userType) {
+      case "Doctor":
+        return DoctorItems;
+      case "Hospital":
+        return HospitalItems;
+      case "Patient":
+      default:
+        return PatientItems;
+    }
+  };
 
   return (
     <>
       {token ? (
-        <div className="flex items-start sticky top-0 z-10">
+        <div className="flex items-start sticky top-0 z-10 bg-gray-100">
           <SidebarProvider
             className="flex items-start gap-4"
             open={open}
             onOpenChange={setOpen}
           >
-            {/* Sidebar */}
             <Sidebar
               collapsible="icon"
               className={`bg-white text-black h-screen shadow-lg ${
                 open ? "w-64" : "w-fit"
               } transition-all`}
             >
-              {/* Sidebar Header */}
               <SidebarHeader className="p-4 border-b border-emerald-400 flex gap-2 flex-row justify-start items-center">
                 <Hospital />
                 <h1
@@ -70,11 +102,10 @@ export default function Navbar() {
                 </h1>
               </SidebarHeader>
 
-              {/* Sidebar Content */}
               <SidebarContent className="flex-1 overflow-y-auto">
                 <SidebarGroup>
                   <SidebarGroupLabel className="py-5 text-emerald-700 text-xl">
-                    Dashboard
+                    {userType} Dashboard
                   </SidebarGroupLabel>
                   <SidebarGroupContent>
                     <SidebarMenu
@@ -82,7 +113,7 @@ export default function Navbar() {
                         open ? "px-3" : "px-0"
                       } py-3`}
                     >
-                      {items.map((item) => (
+                      {getSidebarItems().map((item, index) => (
                         <SidebarMenuItem key={item.title}>
                           <SidebarMenuButton asChild>
                             <a
@@ -108,7 +139,6 @@ export default function Navbar() {
                 </SidebarGroup>
               </SidebarContent>
 
-              {/* Sidebar Footer */}
               <SidebarFooter className="p-4 border-t border-emerald-400 flex flex-col gap-2">
                 <div className="flex gap-2 items-center">
                   <User className="text-emerald-600 w-7 h-7" />
@@ -136,8 +166,6 @@ export default function Navbar() {
                 </div>
               </SidebarFooter>
             </Sidebar>
-
-            {/* Toggle Sidebar Button */}
             <button
               onClick={() => setOpen(!open)}
               aria-label="Toggle Sidebar"
@@ -152,14 +180,14 @@ export default function Navbar() {
           </SidebarProvider>
         </div>
       ) : (
-        <div className="flex items-center justify-center bg-emerald-600 text-white p-4 sticky top-0 w-full">
-          <div className="flex items-center justify-between w-[80%]">
+        <div className="fixed top-0 left-0 w-full bg-emerald-600 text-white p-4 shadow-md z-50">
+          <div className="flex items-center justify-between w-[80%] mx-auto">
             <h1 className="text-xl font-bold">HealthPal</h1>
             <div className="flex gap-4">
-              <a href="/login" className="text-white">
+              <a href="/login" className="text-white hover:underline">
                 Login
               </a>
-              <a href="/signup" className="text-white">
+              <a href="/signup" className="text-white hover:underline">
                 Signup
               </a>
             </div>
