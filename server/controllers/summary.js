@@ -17,7 +17,7 @@ The summary will be used by healthcare professionals to quickly assess the patie
 }
 
 async function generateSummary(req, res) {
-    if (req.user.type !== "doctor") {
+    if (req.user.type === "Patient") {
         return res.status(403).json({
             message: "Forbidden",
         });
