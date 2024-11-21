@@ -51,7 +51,7 @@ const LoginHospital = () => {
       Cookies.set("jwt", responseData.token, {
         secure: true,
         sameSite: "strict",
-        expires: 1,
+        // expires: 1,
       });
       navigate("/dashboard");
 

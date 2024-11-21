@@ -4,8 +4,9 @@ import Dashboard from "./pages/dasboard";
 import Login from "./pages/login";
 import SignUp from "./pages/signup";
 import Chat from "./pages/chat";
+import PatientsList from "./pages/findPatients";
+import PatientInfo from "./pages/patient";
 import PrivateRoute from "./Routes/privateRoute";
-import Navbar from "./components/layout/navbar";
 import Layout from "./components/layout/layout";
 
 function App() {
@@ -29,6 +30,26 @@ function App() {
             <PrivateRoute>
               <Layout>
                 <Chat />
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/find-patients"
+          element={
+            <PrivateRoute>
+              <Layout>
+                <PatientsList />
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/patient/:id"
+          element={
+            <PrivateRoute>
+              <Layout>
+                <PatientInfo />
               </Layout>
             </PrivateRoute>
           }
