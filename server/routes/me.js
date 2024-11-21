@@ -26,4 +26,8 @@ router.get("/", async (req, res) => {
     }
 });
 
+router.get('/type', (req, res) => {
+    res.json({ type: req.user.type });
+});
+
 export { router };

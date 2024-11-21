@@ -13,12 +13,13 @@ const doctorSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    dateOfBirth: {
+    dob: {
         type: Date,
         required: true,
     },
     gender: {
-        type: Number,
+        type: String,
+        enum: ["Male", "Female", "Other"],
         required: true,
     },
     address: {
@@ -30,16 +31,14 @@ const doctorSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    speciality: {
+    degree: {
         type: String,
         required: true,
     },
-    hospitalIds: [
-        {
-            type: String,
-            required: true,
-        },
-    ],
+    specialization: {
+        type: String,
+        required: true,
+    },
     experience: {
         type: Number, // In years
         required: true,

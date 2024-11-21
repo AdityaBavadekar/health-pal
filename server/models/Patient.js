@@ -13,7 +13,7 @@ const Patient = new mongoose.Schema({
         type: String,
         required: true,
     },
-    dateOfBirth: {
+    dob: {
         type: Date,
         required: true,
     },
@@ -21,6 +21,21 @@ const Patient = new mongoose.Schema({
         type: String,
         enum: ["Male", "Female", "Other"],
         required: true,
+    },
+    country: {
+        type: String,
+        required: false,
+        default: "",
+    },
+    province: {
+        type: String,
+        required: false,
+        default: "",
+    },
+    city: {
+        type: String,
+        required: false,
+        default: "",
     },
     address: {
         type: String,

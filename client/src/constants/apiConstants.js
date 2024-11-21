@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 const API_BASE_URL = "https://health-pal-api.onrender.com/api";
+=======
+
+const API_BASE_URL = 'https://health-pal-api.onrender.com/api'
+>>>>>>> b264fa2c65338ec528661e9c2298e9967c7c98c6
 
 const ApiConstants = {
   API_LOGIN_DOCTOR: `${API_BASE_URL}/doctors/login`,

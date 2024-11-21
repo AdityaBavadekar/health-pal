@@ -5,8 +5,8 @@ import Patient from "../models/Patient.js";
 import Hospital from "../models/Hospital.js";
 
 function PatientRegister(req, res) {
-  const { name, email, password, dateOfBirth, gender, address, mobileNumber, weight, bloodSign, familyDoctor, emergencyNumber, diseases, operations, alergies } = req.body;
-  if (!name || !email || !password || !dateOfBirth || !gender || !mobileNumber) {
+  const { name, email, mobileNumber, country, provience, city, address, password, dob, gender, weight, bloodSign, familyDoctor, emergencyNumber, diseases, operations, alergies } = req.body;
+  if (!name || !email || !password || !dob || !gender || !mobileNumber) {
     return res.status(400).json({ message: "Please provide all the fields" });
   }
   Patient.findOne({ email })
@@ -20,8 +20,11 @@ function PatientRegister(req, res) {
             name,
             email,
             password: hashedPassword,
-            dateOfBirth,
+            dob,
             gender,
+            country,
+            provience,
+            city,
             address,
             mobileNumber,
             weight,
@@ -79,8 +82,8 @@ function PatientLogin(req, res) {
     });
 }
 function DoctorRegister(req, res) {
-  const { name, email, password, dateOfBirth, gender, address, mobileNumber, speciality, hospitalIds, experience, licenseData } = req.body;
-  if (!name, !email || !password || !dateOfBirth || !gender || !mobileNumber || !speciality || !hospitalIds || !experience || !licenseData) {
+  const { name, email, mobileNumber, address, password, dob, gender, degree, specialization, experience, licenseData } = req.body;
+  if (!name, !email || !mobileNumber || !address || !password || !dob || !gender || !degree || !specialization || !experience || !licenseData) {
     return res.status(400).json({ message: "Please provide all the fields" });
   }
   Doctor.findOne({ email })
@@ -94,12 +97,12 @@ function DoctorRegister(req, res) {
             name,
             email,
             password: hashedPassword,
-            dateOfBirth,
+            dob,
             gender,
             address,
             mobileNumber,
-            speciality,
-            hospitalIds,
+            degree,
+            specialization,
             experience,
             licenseData
           });
@@ -155,8 +158,8 @@ function DoctorLogin(req, res) {
 }
 
 function HospitalRegister(req, res) {
-  const { name, email, password, address, mobileNumber, licenseData } = req.body;
-  if (!name || !email || !password || !address || !mobileNumber || !licenseData) {
+  const { name, email, address, mobileNumber, licenseData, password, doctorIds } = req.body;
+  if (!name || !email || !address || !mobileNumber || !licenseData || !password) {
     return res.status(400).json({ message: "Please provide all the fields" });
   }
   Hospital.findOne({ email })
@@ -172,7 +175,8 @@ function HospitalRegister(req, res) {
             password: hashedPassword,
             address,
             mobileNumber,
-            licenseData
+            licenseData,
+            doctorIds
           });
 
           newHospital.save()
