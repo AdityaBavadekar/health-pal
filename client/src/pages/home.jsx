@@ -5,7 +5,7 @@ const Home = () => {
     <div className="w-full">
 
       <section 
-        className="h-screen bg-[url('./img_srcs/home.jpeg')] bg-cover bg-center bg-fixed flex items-center justify-center">
+        className="h-screen bg-[url('img_srcs/home.jpeg')] bg-cover bg-center bg-fixed flex items-center justify-center">
 <div className="text-center text-white p-8 max-w-2xl">
   <h1 className="text-6xl font-bold mb-6">Health Pal</h1>
   <p className="text-xl mb-8">Your Health, Our Priority</p>
