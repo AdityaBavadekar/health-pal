@@ -1,10 +1,12 @@
 import { Router } from 'express';
-import { getHospitalById, addHospital, updateHospital, getAllHospitals } from '../controllers/hospitals.js';
+import { getHospitalById, addHospital, updateHospital, getAllHospitals, getHospitalsByName, addDoctorToHospital } from '../controllers/hospitals.js';
 const router = Router();
 
 router.get('/', getAllHospitals);
 router.get('/:id', getHospitalById);
 router.post('/', addHospital);
 router.put('/:id', updateHospital);
+router.get('/by-name/:name', getHospitalsByName);
+router.post('/add-doctor', addDoctorToHospital);
 
 export { router };

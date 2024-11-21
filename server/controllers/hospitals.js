@@ -53,4 +53,38 @@ function updateHospital(req, res) {
     });
 }
 
-export { getHospitalById, addHospital, updateHospital, getAllHospitals };
+function getHospitalsByName(req, res) {
+    const { name } = req.params;
+    Hospital.find({ name:  { $regex: new RegExp(name, "i") } })
+        .then(hospitals => {
+            res.json(hospitals);
+        })
+        .catch(err => {
+            res.status(400).json(err);
+        });
+}
+
+function addDoctorToHospital(req, res) {
+    if (req.user.type != "Hospital") {
+      return res.status(403).json({ message: "Forbidden" });
+    }
+    const { doctorId } = req.body;
+    const hospitalId = req.user.id;
+
+    Hospital.findByIdAndUpdate(
+        hospitalId,
+        { $push: { doctors: doctorId } },
+        { new: true, runValidators: true }
+    )
+    .then(hospital => {
+        if (!hospital) {
+            return res.status(404).json({ message: "Hospital not found" });
+        }
+        res.json(hospital);
+    })
+    .catch(err => {
+        res.status(400).json(err);
+    });
+}
+
+export { getHospitalById, addHospital, updateHospital, getAllHospitals, getHospitalsByName, addDoctorToHospital };

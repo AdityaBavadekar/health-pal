@@ -55,4 +55,19 @@ function updatePatient(req, res) {
     });
 }
 
-export { getPatientById, addPatient, updatePatient, getAllPatients };
+function getPatientsByName(req, res) {
+    if (req.user.type != "Hospital") {
+      return res.status(403).json({ message: "Forbidden" });
+    }
+    const { name } = req.params;
+
+    Patient.find({ name: { $regex: new RegExp(name, "i") } }, '-operations -allergies -diseases')
+        .then(patients => {
+            res.json(patients);
+        })
+        .catch(err => {
+            res.status(400).json(err);
+        });
+}
+
+export { getPatientById, addPatient, updatePatient, getAllPatients, getPatientsByName };
