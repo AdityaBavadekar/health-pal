@@ -4,8 +4,6 @@ import Doctor from '../models/Doctor.js';
 import Patient from "../models/Patient.js";
 import Hospital from "../models/Hospital.js";
 
-
-
 function PatientRegister(req, res) {
   const { name, email, password, dateOfBirth, gender, address, mobileNumber, weight, bloodSign, familyDoctor, emergencyNumber, diseases, operations, alergies } = req.body;
   if (!name || !email || !password || !dateOfBirth || !gender || !mobileNumber) {
