@@ -1,5 +1,5 @@
 
-const API_BASE_URL = 'https://health-pal-api.onrender.com/api/'
+const API_BASE_URL = 'https://health-pal-api.onrender.com/api'
 
 const ApiConstants = {
     API_LOGIN_DOCTOR: `${API_BASE_URL}/doctors/login`,

@@ -25,6 +25,11 @@ const Hospital = new mongoose.Schema({
         type: String,
         required: false,
     },
+    doctorIds: {
+        type: [mongoose.Schema.Types.ObjectId],
+        required: false,
+        default: [],
+    },
 });
 
 export default mongoose.model("Hospital", Hospital);
