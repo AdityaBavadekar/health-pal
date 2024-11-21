@@ -203,7 +203,7 @@ function HospitalLogin(req, res) {
   if (!email || !password) {
     return res.status(400).json({ message: "Please provide email and password" });
   }
-  Doctor.findOne({ email })
+  Hospital.findOne({ email })
     .then(user => {
       if (!user) {
         return res.status(400).json({ message: " Hospital not found" });
