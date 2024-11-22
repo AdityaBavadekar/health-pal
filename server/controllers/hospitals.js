@@ -88,30 +88,29 @@ function addDoctorToHospital(req, res) {
     });
 }
 
-function getDoctors(req, res){
+async function getDoctors(req, res){
     if (req.user.type != "Hospital") {
       return res.status(403).json({ message: "Forbidden" });
     }
     const hospitalId = req.user.id;
-    Hospital.findById(hospitalId)
-        .populate('doctorIds')
-        .then(hospital => {
-            if (!hospital) {
-                return res.status(404).json({ message: "Hospital not found" });
+    try {
+        const hospital = await Hospital.findById(hospitalId).populate('doctorIds')
+        if (!hospital) {
+            return res.status(404).json({ message: "Hospital not found" });
+        }
+
+        const doctors = [];
+        for (let doctorId of hospital.doctorIds) {
+            const doctor = await Doctor.findById(doctorId);
+            if (doctor) {
+                doctors.push(doctor);
             }
-            var doctors = [];
-            for (var i = 0; i < hospital.doctorIds.length; i++) {
-                Doctor.findById(hospital.doctorIds[i])
-                    .then(doctor => {
-                        doctors.push(doctor);
-                    })
-                    .catch(err => {});
-            }
-            res.json(doctors);
-        })
-        .catch(err => {
-            res.status(400).json(err);
-        });
+        }
+        
+        res.json(doctors);
+    } catch (error) {
+        res.status(400).json(error);
+    }
 }
 
 export { getHospitalById, addHospital, updateHospital, getAllHospitals, getHospitalsByName, addDoctorToHospital, getDoctors };
