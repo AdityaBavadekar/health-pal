@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/dasboard";
 import Login from "./pages/login";
 import SignUp from "./pages/signup";
+import Home from "./pages/home";
 import Chat from "./pages/chat";
 import PatientsList from "./pages/findPatients";
 import PatientInfo from "./pages/patient";
@@ -14,6 +15,7 @@ function App() {
     <Router>
       {/* <Layout /> */}
       <Routes>
+        <Route path="/" element = {<Home />}/>
         <Route
           path="/dashboard"
           element={
