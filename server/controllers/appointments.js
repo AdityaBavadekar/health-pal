@@ -27,7 +27,10 @@ async function getAllAppointmentsForPatient(req, res) {
         for (let index = 0; index < appointments.length; index++) {
             const element = appointments[index];
             let hospital = await Hospital.findById(element.hospitalId);
-            appointments[index]['hospital'] = hospital;
+            appointments[index] = {
+                ...element._doc,
+                'hospital': hospital
+            }
         }
         res.json(appointments);
     } catch (error) {
