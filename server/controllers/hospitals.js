@@ -99,7 +99,6 @@ function getDoctors(req, res){
             if (!hospital) {
                 return res.status(404).json({ message: "Hospital not found" });
             }
-            res.json(hospital.doctorIds);
             var doctors = [];
             for (var i = 0; i < hospital.doctorIds.length; i++) {
                 Doctor.findById(hospital.doctorIds[i])

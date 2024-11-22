@@ -25,7 +25,8 @@ const ManageDoctors = () => {
     navigate('/dashboard');
   }
 
-  useEffect(() => {
+
+  function refresh() {
     fetch(ApiConstants.API_HOSPITAL_DOCTORS, {
       method: 'GET',
       headers: {
@@ -45,7 +46,11 @@ const ManageDoctors = () => {
     .catch((error) => {
       console.error('Error:', error);
     });
-  }, []);
+  }
+
+    useEffect(() => {
+        refresh();
+    }, []);
 
   function handleAddDoctor() {
     if (searchTerm == '') {
@@ -69,7 +74,7 @@ const ManageDoctors = () => {
         return response.json();
     })
     .then(data => {
-        setDoctors([data, ...doctors]);
+        refresh();
         searchTerm('');
     })
     .catch((error) => {

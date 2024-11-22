@@ -3,11 +3,11 @@ import { getHospitalById, addHospital, updateHospital, getAllHospitals, getHospi
 const router = Router();
 
 router.get('/', getAllHospitals);
+router.get('/by-name/:name', getHospitalsByName);
+router.get('/get-doctors', getDoctors);
 router.get('/:id', getHospitalById);
 router.post('/', addHospital);
 router.put('/:id', updateHospital);
-router.get('/by-name/:name', getHospitalsByName);
 router.post('/add-doctor', addDoctorToHospital);
-router.get('/get-doctors', getDoctors);
 
 export { router };
