@@ -83,7 +83,7 @@ const Patient = new mongoose.Schema({
         type: [
             {
                 name: {
-                    type: Number,
+                    type: String,
                     required: true,
                 },
             },
@@ -95,7 +95,7 @@ const Patient = new mongoose.Schema({
         type: [
             {
                 name: {
-                    type: Number,
+                    type: String,
                     required: true,
                 },
             },
