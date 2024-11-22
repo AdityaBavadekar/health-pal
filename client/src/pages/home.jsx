@@ -1,6 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
+    const navigate = useNavigate(); 
+    const handleSignUp = () => {
+      navigate('signup');
+    };
+    const handleLogin = () => {
+      navigate('/login');
+    };
   return (
     <div className="w-full">
 
@@ -10,10 +18,10 @@ const Home = () => {
   <h1 className="text-6xl font-bold mb-6 text-black">Health Pal</h1>
   <p className="text-xl mb-8 text-black">Your Health, Our Priority</p>
   <div className="flex justify-center gap-8">
-    <button className="bg-emerald-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-emerald-600 transition duration-300 w-40"> {/* Added w-40 for fixed width */}
+    <button onClick={handleSignUp} className="bg-emerald-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-emerald-600 transition duration-300 w-40"> {/* Added w-40 for fixed width */}
       Sign Up
     </button>
-    <button className="bg-transparent text-white px-8 py-4 rounded-full text-lg font-semibold border-2 border-white hover:bg-white hover:text-emerald-500 transition duration-300 w-40"> {/* Added w-40 for fixed width */}
+    <button onClick={handleLogin} className="bg-transparent text-white px-8 py-4 rounded-full text-lg font-semibold border-2 border-white hover:bg-white hover:text-emerald-500 transition duration-300 w-40"> {/* Added w-40 for fixed width */}
       Log In
     </button>
   </div>
@@ -42,7 +50,7 @@ const Home = () => {
       <p className="text-emerald-100 text-lg leading-relaxed mb-8">
         HealthPal helps patients by making managing their health much easier. Often, patients forget to take their medicine or miss appointments, which can harm their health. By having automatic reminders for medications and appointment scheduling, patients can stay on track with their treatment. It also helps them feel more in control of their health, as they can easily access their medical history and get answers to their health-related questions without waiting for a doctor's visit. Additionally, finding and buying medicine becomes less of a hassle, as they can order it directly or find nearby pharmacies. This platform saves patients time, reduces stress, and ensures they follow their health plan more effectively.
       </p>
-      <button className="bg-emerald-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-emerald-600 transition duration-300 inline-flex items-center justify-center mx-auto">
+      <button onClick={handleSignUp} className="bg-emerald-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-emerald-600 transition duration-300 inline-flex items-center justify-center mx-auto">
         <span>Sign up as Patient</span>
         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
           <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
@@ -58,7 +66,7 @@ const Home = () => {
           <h2 className="text-5xl font-bold mb-12 text-emerald-900">For Doctor</h2>
           <p className="text-xl text-emerald-700 leading-relaxed py-4">
           HealthPal saves valuable time and reduces the complexity of managing patients. Doctors often have to spend a lot of time reviewing patient histories and organizing appointments. Doctors can make faster and more accurate decisions with quick access to patient records and AI-generated summaries. The platform allows them to easily communicate with patients, answering questions or giving advice without needing extra appointments. This helps doctors focus more on providing care rather than handling paperwork, improving their efficiency. Overall, the platform simplifies their daily tasks, allowing them to offer better care while reducing their workload.</p>
-          <button className="bg-emerald-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-emerald-600 transition duration-300 inline-flex items-center justify-center mx-auto">
+          <button onClick={handleSignUp} className="bg-emerald-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-emerald-600 transition duration-300 inline-flex items-center justify-center mx-auto">
         <span>Sign up as Doctor</span>
         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
           <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
