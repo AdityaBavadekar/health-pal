@@ -60,17 +60,17 @@ function addAppointment(req, res) {
     if (req.user.type != "Patient") {
         return res.status(401).json({ message: "Unauthorized" });
     }
-    const { date, startTime, endTime, hospitalId } = req.body;
-    if (!date || !startTime || !endTime || !hospitalId) {
+    const { hospitalId, department, appointmentDate, reason } = req.body;
+    if (!hospitalId || !department || !appointmentDate || !reason) {
         return res.status(400).json({ message: "Please provide all the fields" });
     }
     const patientId = req.user.id;
     const newAppointment = new Appoitment({
         patientId,
         hospitalId,
-        date,
-        startTime,
-        endTime
+        department,
+        appointmentDate,
+        reason
     });
     newAppointment.save()
         .then(appointment => {
