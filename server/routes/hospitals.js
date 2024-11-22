@@ -8,6 +8,6 @@ router.post('/', addHospital);
 router.put('/:id', updateHospital);
 router.get('/by-name/:name', getHospitalsByName);
 router.post('/add-doctor', addDoctorToHospital);
-router.post('/get-doctors', getDoctors);
+router.get('/get-doctors', getDoctors);
 
 export { router };

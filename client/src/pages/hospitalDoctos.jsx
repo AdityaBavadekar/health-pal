@@ -52,7 +52,7 @@ const ManageDoctors = () => {
         return;
     }
 
-    fetch(ApiConstants.API_ADD_DOCTOR_TO_HOSPITAL, {
+    fetch(ApiConstants.API_HOSPITAL_ADD_DOCTOR, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

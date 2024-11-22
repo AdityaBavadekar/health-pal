@@ -18,6 +18,7 @@ const ApiConstants = {
   API_ME_TYPE: `${API_BASE_URL}/me/type`,
   API_PATIENT_BY_NAME: `${API_BASE_URL}/patients/by-name`,
   API_PATIENT_BY_ID: `${API_BASE_URL}/patients`,
+  API_HOSPITAL_ADD_DOCTOR: `${API_BASE_URL}/hospitals/add-doctor`,
 
   API_SUMMARY_PATIENT: `${API_BASE_URL}/summary/`,
 };
