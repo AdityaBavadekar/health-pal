@@ -73,7 +73,7 @@ function addDoctorToHospital(req, res) {
 
     Hospital.findByIdAndUpdate(
         hospitalId,
-        { $push: { doctors: doctorId } },
+        { $push: { doctorIds: doctorId } },
         { new: true, runValidators: true }
     )
     .then(hospital => {
