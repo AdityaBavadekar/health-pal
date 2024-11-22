@@ -1,4 +1,5 @@
 import Appoitment from '../models/Appointment.js';
+import Hospital from '../models/Hospital.js';
 
 function getAllAppointments(req, res) {
     const hospitalId = req.user.id;
@@ -14,18 +15,24 @@ function getAllAppointments(req, res) {
         });       
 }
 
-function getAllAppointmentsForPatient(req, res) {
+async function getAllAppointmentsForPatient(req, res) {
     const patientId = req.user.id;
     if (!patientId || req.user.type != "Patient") {
         return res.status(401).json({ message: "Unauthorized" });
     }
-    Appoitment.find({ patientId })
-        .then(appointments => {
-            res.json(appointments);
-        })
-        .catch(err => {
-            res.status(500).json(err);
-        });
+
+    try {
+        const appointments = await Appoitment.find({ patientId });
+        
+        for (let index = 0; index < appointments.length; index++) {
+            const element = appointments[index];
+            let hospital = await Hospital.findById(element.hospitalId);
+            appointments[index]['hospital'] = hospital;
+        }
+        res.json(appointments);
+    } catch (error) {
+        res.status(500).json(error);
+    }
 }
 
 function getAppointmentById(req, res) {

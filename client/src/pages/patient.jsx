@@ -2,7 +2,7 @@ import React from "react";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import ApiConstants from "../constants/ApiConstants";
+import ApiConstants from "../constants/apiConstants";
 import { jwtDecode } from "jwt-decode";
 import { useParams } from "react-router-dom";
 import ReactMarkdown from "react-markdown";

@@ -12,7 +12,7 @@ import {
   LogOut,
 } from "lucide-react";
 import Cookies from "js-cookie";
-import ApiConstants from "../constants/ApiConstants";
+import ApiConstants from "../constants/apiConstants";
 
 const DashboardDoctor = () => {
   const [doctor, setDoctor] = useState({});
