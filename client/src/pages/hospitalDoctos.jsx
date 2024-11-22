@@ -115,6 +115,9 @@ const ManageDoctors = () => {
                   <p className="text-sm text-gray-600">
                     {doctor.mobileNumber}
                   </p>
+                  <p className="text-sm text-gray-600">
+                    ({doctor.specialization})
+                  </p>
                 </div>
                 <button className="bg-blue-500 text-white p-2 rounded mt-2">
                   <p className="text-sm">Delete</p>
