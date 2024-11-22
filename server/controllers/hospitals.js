@@ -1,4 +1,5 @@
 import Hospital from "../models/Hospital.js";
+import Doctor from "../models/Doctor.js";
 
 function getAllHospitals(req, res) {
     Hospital.find()
@@ -87,4 +88,29 @@ function addDoctorToHospital(req, res) {
     });
 }
 
-export { getHospitalById, addHospital, updateHospital, getAllHospitals, getHospitalsByName, addDoctorToHospital };
+async function getDoctors(req, res){
+    if (req.user.type != "Hospital") {
+      return res.status(403).json({ message: "Forbidden" });
+    }
+    const hospitalId = req.user.id;
+    try {
+        const hospital = await Hospital.findById(hospitalId).populate('doctorIds')
+        if (!hospital) {
+            return res.status(404).json({ message: "Hospital not found" });
+        }
+
+        const doctors = [];
+        for (let doctorId of hospital.doctorIds) {
+            const doctor = await Doctor.findById(doctorId);
+            if (doctor) {
+                doctors.push(doctor);
+            }
+        }
+        
+        res.json(doctors);
+    } catch (error) {
+        res.status(400).json(error);
+    }
+}
+
+export { getHospitalById, addHospital, updateHospital, getAllHospitals, getHospitalsByName, addDoctorToHospital, getDoctors };

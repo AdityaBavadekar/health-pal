@@ -13,10 +13,12 @@ const ApiConstants = {
 
   API_ALL_APPOINTMENTS: `${API_BASE_URL}/appointments`,
   API_ALL_MEDICINE_SESIONS: `${API_BASE_URL}/medicines/sessions`,
+  API_HOSPITAL_DOCTORS: `${API_BASE_URL}/hospitals/get-doctors`,
   API_ME: `${API_BASE_URL}/me`,
   API_ME_TYPE: `${API_BASE_URL}/me/type`,
   API_PATIENT_BY_NAME: `${API_BASE_URL}/patients/by-name`,
   API_PATIENT_BY_ID: `${API_BASE_URL}/patients`,
+  API_HOSPITAL_ADD_DOCTOR: `${API_BASE_URL}/hospitals/add-doctor`,
 
   API_SUMMARY_PATIENT: `${API_BASE_URL}/summary/`,
 };
