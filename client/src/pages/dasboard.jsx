@@ -11,13 +11,13 @@ const Dashboard = () => {
   const [userType, setUserType] = useState(user.type);
   console.log(userType);
   return (
-    <div className="px-5 py-3">
+    <div className="">
       {userType === "Hospital" ? (
         <DashboardHospital />
       ) : userType == "Doctor" ? (
         <DashboardDoctor />
       ) : (
-        <div></div>
+        <div>Hey there</div>
       )}
     </div>
   );

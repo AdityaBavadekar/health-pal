@@ -25,29 +25,41 @@ import {
   User,
   SidebarCloseIcon,
   SidebarOpenIcon,
+  User2,
+  ChevronUp,
 } from "lucide-react";
 import Cookies from "js-cookie";
+import ApiConstants from "../../constants/ApiConstants";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useNavigate } from "react-router-dom";
 
 const PatientItems = [
   { title: "Home", url: "/dashboard", icon: Home },
   { title: "Reminder", url: "/reminder", icon: Bell },
   { title: "Health Records", url: "/health-records", icon: File },
   { title: "Appointments", url: "/appointments", icon: Calendar },
-  { title: "AI Chat", url: "/ai-chat", icon: Text },
+  { title: "AI Chat", url: "/chat", icon: Text },
   { title: "Search", url: "/search", icon: Search },
   { title: "Settings", url: "/settings", icon: Settings },
 ];
 
 const DoctorItems = [
   { title: "Home", url: "/dashboard", icon: Home },
-  { title: "Appointments", url: "/home", icon: Calendar },
+  { title: "Appointments", url: "/appointments", icon: Calendar },
   { title: "Search", url: "/search", icon: Search },
   { title: "Settings", url: "/settings", icon: Settings },
 ];
 
 const HospitalItems = [
   { title: "Home", url: "/dashboard", icon: Home },
-  { title: "Appointments", url: "/home", icon: Calendar },
+  { title: "Appointments", url: "/appointments", icon: Calendar },
   { title: "Search", url: "/search", icon: Search },
   { title: "Settings", url: "/settings", icon: Settings },
 ];
@@ -56,13 +68,34 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [userType, setUserType] = useState(null);
   const token = Cookies.get("jwt");
+  const [data, setData] = useState({});
 
+  const navigate = useNavigate();
   useEffect(() => {
     if (token) {
       const decodedToken = jwtDecode(token);
       setUserType(decodedToken.type);
     }
   }, [token]);
+
+  useEffect(() => {
+    const token = Cookies.get("jwt");
+    fetch(ApiConstants.API_ME, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setData(data);
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, []);
 
   const getSidebarItems = () => {
     switch (userType) {
@@ -74,6 +107,11 @@ export default function Navbar() {
       default:
         return PatientItems;
     }
+  };
+
+  const logout = () => {
+    Cookies.remove("jwt");
+    navigate("/login");
   };
 
   return (
@@ -139,14 +177,14 @@ export default function Navbar() {
                 </SidebarGroup>
               </SidebarContent>
 
-              <SidebarFooter className="p-4 border-t border-emerald-400 flex flex-col gap-2">
+              {/* <SidebarFooter className="p-4 border-t border-emerald-400 flex flex-col gap-2">
                 <div className="flex gap-2 items-center">
                   <User className="text-emerald-600 w-7 h-7" />
                   <div className={`${open ? "flex" : "hidden"} flex-col`}>
                     <h1 className="text-md text-emerald-700 font-semibold">
-                      UserName
+                      {data.name}
                     </h1>
-                    <p className="text-sm text-emerald-600 ">Email/Id</p>
+                    <p className="text-sm text-emerald-600 ">{data.email}</p>
                   </div>
                 </div>
                 <div
@@ -164,6 +202,38 @@ export default function Navbar() {
                     Privacy Policy
                   </a>
                 </div>
+              </SidebarFooter> */}
+              <SidebarFooter className="my-2 p-2">
+                <SidebarMenu>
+                  <SidebarMenuItem>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <SidebarMenuButton>
+                          <User2 className="w-6 h-6" />
+                          <div
+                            className={`${open ? "flex" : "hidden"} flex-col`}
+                          >
+                            <h1 className="text-md text-emerald-700 font-semibold">
+                              {data.name}
+                            </h1>
+                            <p className="text-sm text-emerald-600 ">
+                              {data.email}
+                            </p>
+                          </div>
+                          <ChevronUp className="ml-auto" />
+                        </SidebarMenuButton>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent
+                        side="top"
+                        className="w-[--radix-popper-anchor-width]"
+                      >
+                        <DropdownMenuItem>
+                          <button onClick={logout}>Sign out</button>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </SidebarMenuItem>
+                </SidebarMenu>
               </SidebarFooter>
             </Sidebar>
             <button

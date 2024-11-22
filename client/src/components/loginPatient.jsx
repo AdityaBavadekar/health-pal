@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import ApiConstants from "../constants/apiConstants";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const formSchema = z.object({
   email: z.string().email().min(2, {
