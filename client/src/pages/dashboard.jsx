@@ -3,6 +3,7 @@ import DashboardHospital from "../components/dashboardHospital";
 import DashboardDoctor from "../components/dashboardDoctor";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
+import PatientDashboard from "../components/dashboardPatient";
 
 const Dashboard = () => {
   const token = Cookies.get("jwt");
@@ -17,7 +18,7 @@ const Dashboard = () => {
       ) : userType == "Doctor" ? (
         <DashboardDoctor />
       ) : (
-        <div>Hey there</div>
+        <PatientDashboard />
       )}
     </div>
   );
