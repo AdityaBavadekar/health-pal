@@ -1,6 +1,11 @@
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import Dashboard from "./pages/dasboard";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import Dashboard from "./pages/dashboard";
 import Login from "./pages/login";
 import SignUp from "./pages/signup";
 import Home from "./pages/home";
@@ -12,13 +17,47 @@ import NotFound from "./pages/notFound";
 import PrivateRoute from "./Routes/privateRoute";
 import ManageDoctors from "./pages/hospitalDoctos";
 import Layout from "./components/layout/layout";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
+import RemindersPage from "./pages/reminder";
 
 function App() {
+  const isAuthenticated = Cookies.get("jwt");
+
   return (
     <Router>
-      {/* <Layout /> */}
       <Routes>
+        {/* Redirect root path based on authentication */}
+        <Route
+          path="/"
+          element={
+            isAuthenticated ? (
+              <Navigate to="/dashboard" replace />
+            ) : (
+              <Navigate to="/home" replace />
+            )
+          }
+        />
+
+        {/* Public Routes */}
+        <Route path="/home" element={<Home />} />
+        <Route
+          path="/login"
+          element={
+            <Layout>
+              <Login />
+            </Layout>
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <Layout>
+              <SignUp />
+            </Layout>
+          }
+        />
+
+        {/* Protected Routes */}
         <Route
           path="/dashboard"
           element={
@@ -79,14 +118,10 @@ function App() {
             </PrivateRoute>
           }
         />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/" element={
-          (Cookies.get('jwt')) ? <Navigate to="/dashboard" replace /> : <Navigate to="/home" replace />
-        } />
+        <Route path="/reminder" element={<RemindersPage />} />
+        {/* Fallback Routes */}
         <Route path="/not-found" element={<NotFound />} />
-        <Route path="/*" element={<Navigate to="/not-found" replace/>} />
+        <Route path="/*" element={<Navigate to="/not-found" replace />} />
       </Routes>
     </Router>
   );
