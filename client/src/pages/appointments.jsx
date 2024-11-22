@@ -2,6 +2,7 @@ import React from "react";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import ApiConstants from "../constants/apiConstants";
+import { jwtDecode } from "jwt-decode";
 
 const NoHospitalsFound = () => {
     return (
@@ -12,11 +13,95 @@ const NoHospitalsFound = () => {
     );
 };
 
+const AppointmentsListPatient = ({ loading, appointments, addAppointment }) => {
+    return (
+        <div className="bg-gray-100 h-screen">
+            <h1 className="text-3xl font-bold text-center mb-8 text-gray-800 py-5">
+                My Appointments
+            </h1>
+            <div className="text-center text-gray-600 py-5">
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={addAppointment}>
+                    Add New Appointment
+                </button>
+            </div>
+            <div className="grid grid-cols-1 gap-4">
+                {
+                    loading && <div className="text-center text-gray-600 py-5">
+                        <h2 className="text-2xl font-semibold mb-3">Loading...</h2>
+                        <p className="text-sm">Please wait</p>
+                    </div>
+                }
+                {
+                    !loading && appointments.length == 0 && <NoHospitalsFound />
+                }
+                <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
+                    {!loading &&
+                        appointments.map((appointment, index) => {
+                            return (
+                                <div
+                                    key={index}
+                                    className="bg-gray-100 p-6 rounded-lg shadow-md gap-4 flex items-center justify-between h-full border border-gray-200"
+                                >
+                                    <div className="">
+                                        <h3 className="text-xl font-bold text-gray-800 mb-3">{new Date(appointment.appointmentDate).toLocaleString()}</h3>
+                                        <p className="text-sm text-gray-600 font-bold">{appointment.hospital.name}</p>
+                                        <p className="text-sm text-gray-600">[{appointment.department}] {appointment.reason}</p>
+                                    </div>
+                                </div>
+                            );
+                        })
+                    }
+                </div>
+            </div>
+        </div>
+    );
+};
+
+const AppointmentsListHospital = ({ loading, appointments }) => {
+    return (
+        <div className="bg-gray-100 h-screen">
+            <h1 className="text-3xl font-bold text-center mb-8 text-gray-800 py-5">
+                Scheduled Appointments
+            </h1>
+            <div className="grid grid-cols-1 gap-4">
+                {
+                    loading && <div className="text-center text-gray-600 py-5">
+                        <h2 className="text-2xl font-semibold mb-3">Loading...</h2>
+                        <p className="text-sm">Please wait</p>
+                    </div>
+                }
+                {
+                    !loading && appointments.length == 0 && <NoHospitalsFound />
+                }
+                <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
+                    {!loading &&
+                        appointments.map((appointment, index) => {
+                            return (
+                                <div
+                                    key={index}
+                                    className="bg-gray-100 p-6 rounded-lg shadow-md gap-4 flex items-center justify-between h-full border border-gray-200"
+                                >
+                                    <div className="">
+                                        <h3 className="text-xl font-bold text-gray-800 mb-3">{new Date(appointment.appointmentDate).toLocaleString()}</h3>
+                                        <p className="text-sm text-gray-600 font-bold">{appointment.patient.name}</p>
+                                        <p className="text-sm text-gray-600">[{appointment.department}] {appointment.reason}</p>
+                                    </div>
+                                </div>
+                            );
+                        })
+                    }
+                </div>
+            </div>
+        </div>
+    );
+}
+
 const AppointmentsList = () => {
     const [appointments, setAppointments] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const token = Cookies.get("jwt");
+    const user = jwtDecode(token);
 
     useEffect(() => {
         setLoading(true);
@@ -43,6 +128,7 @@ const AppointmentsList = () => {
     }, [])
 
     function addAppointment(){
+        if (user.type != "Patient") return;
         setLoading(true);
         fetch(ApiConstants.API_ALL_APPOINTMENTS, {
             method: "POST",
@@ -74,43 +160,13 @@ const AppointmentsList = () => {
     }
 
     return (
-        <div className="bg-gray-100 h-screen">
-            <h1 className="text-3xl font-bold text-center mb-8 text-gray-800 py-5">
-                My Appointments
-            </h1>
-            <div className="text-center text-gray-600 py-5">
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={addAppointment}>
-                    Add New Appointment
-                </button>
-            </div>
-            <div className="grid grid-cols-1 gap-4">
-                {
-                    loading && <div className="text-center text-gray-600 py-5">
-                        <h2 className="text-2xl font-semibold mb-3">Loading...</h2>
-                        <p className="text-sm">Please wait</p>
-                    </div>
-                }
-                {
-                    !loading && appointments.length == 0 && <NoHospitalsFound />
-                }
-                <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
-                    {!loading &&
-                        appointments.map((appointment, index) => {
-                            return (
-                                <div
-                                    key={index}
-                                    className="bg-gray-100 p-6 rounded-lg shadow-md gap-4 flex items-center justify-between h-full border border-gray-200"
-                                >
-                                    <div className="">
-                                        <h3 className="text-xl font-bold text-gray-800 mb-3">{new Date(appointment.appointmentDate).toLocaleString()}</h3>
-                                        <p className="text-sm text-gray-600">{appointment.reason}</p>
-                                    </div>
-                                </div>
-                            );
-                        })
-                    }
-                </div>
-            </div>
+        <div>
+            {
+                user.type == "Patient" && <AppointmentsListPatient loading={loading} appointments={appointments} addAppointment={addAppointment}/>
+            }
+            {
+                user.type == "Hospital" && <AppointmentsListHospital loading={loading} appointments={appointments} />
+            }
         </div>
     );
 };

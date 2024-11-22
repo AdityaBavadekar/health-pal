@@ -1,5 +1,6 @@
 import Appoitment from '../models/Appointment.js';
 import Hospital from '../models/Hospital.js';
+import Patient from '../models/Patient.js';
 
 function getAllAppointments(req, res) {
     const hospitalId = req.user.id;
@@ -13,6 +14,15 @@ function getAllAppointments(req, res) {
         .catch(err => {
             res.status(500).json(err);
         });       
+}
+
+async function getAllAppointmentsForUser(req, res) {
+    if (req.user.type == "Hospital") {
+        return getAllAppointmentsForHospital(req, res);
+    } else if (req.user.type == "Patient") {
+        return getAllAppointmentsForPatient(req, res);
+    }
+    return res.status(401).json({ message: "Unauthorized" });
 }
 
 async function getAllAppointmentsForPatient(req, res) {
@@ -30,6 +40,33 @@ async function getAllAppointmentsForPatient(req, res) {
             appointments[index] = {
                 ...element._doc,
                 'hospital': hospital
+            }
+        }
+        res.json(appointments);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+}
+
+async function getAllAppointmentsForHospital(req, res) {
+    const hospitalId = req.user.id;
+    if (req.user.type != "Hospital") {
+        return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    try {
+        const appointments = await Appoitment.find({ hospitalId });
+        
+        for (let index = 0; index < appointments.length; index++) {
+            const element = appointments[index];
+            let patient = await Patient.findById(element.patientId);
+            appointments[index] = {
+                ...element._doc,
+                'patient': {
+                    id: patient._id,
+                    name: patient.name,
+                    email: patient.email
+                }
             }
         }
         res.json(appointments);
@@ -91,4 +128,4 @@ function addAppointment(req, res) {
         });
 }
 
-export { getAllAppointments, getAllAppointmentsForPatient, getAppointmentById, addAppointment, cancelAppointment };
+export { getAllAppointments, getAllAppointmentsForUser, getAppointmentById, addAppointment, cancelAppointment };
