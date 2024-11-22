@@ -9,7 +9,6 @@ import PatientsList from "./pages/findPatients";
 import PatientInfo from "./pages/patient";
 import HealthRecords from "./pages/healthRecords";
 import NotFound from "./pages/notFound";
-import Home from "./pages/home";
 import PrivateRoute from "./Routes/privateRoute";
 import Layout from "./components/layout/layout";
 import Cookies from 'js-cookie';
@@ -19,7 +18,6 @@ function App() {
     <Router>
       {/* <Layout /> */}
       <Routes>
-        <Route path="/" element = {<Home />}/>
         <Route
           path="/dashboard"
           element={
