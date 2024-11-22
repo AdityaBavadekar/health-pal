@@ -29,7 +29,7 @@ import {
   ChevronUp,
 } from "lucide-react";
 import Cookies from "js-cookie";
-import ApiConstants from "../../constants/ApiConstants";
+import ApiConstants from "../../constants/apiConstants";
 import {
   DropdownMenu,
   DropdownMenuContent,

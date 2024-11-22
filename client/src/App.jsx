@@ -16,6 +16,7 @@ import HealthRecords from "./pages/healthRecords";
 import NotFound from "./pages/notFound";
 import PrivateRoute from "./Routes/privateRoute";
 import ManageDoctors from "../src/pages/hospitalDoctos";
+import HospitalsList from "./pages/findHospitals";
 import Layout from "./components/layout/layout";
 import Cookies from "js-cookie";
 import RemindersPage from "./pages/reminder";
@@ -124,6 +125,16 @@ function App() {
             <PrivateRoute>
               <Layout>
                 <RemindersPage />
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/search"
+          element={
+            <PrivateRoute>
+              <Layout>
+                <HospitalsList />
               </Layout>
             </PrivateRoute>
           }
