@@ -14,10 +14,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import ApiConstants from "../constants/apiConstants";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const formSchema = z.object({
   email: z.string().email().min(2, {
-    message: "Username must be at least 2 characters.",
+    message: "Email must be at least 2 characters.",
   }),
   password: z.string().min(6, {
     message: "Password must be at least 6 characters.",
