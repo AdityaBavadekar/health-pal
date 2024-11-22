@@ -10,6 +10,7 @@ import PatientInfo from "./pages/patient";
 import HealthRecords from "./pages/healthRecords";
 import NotFound from "./pages/notFound";
 import PrivateRoute from "./Routes/privateRoute";
+import ManageDoctors from "./pages/hospitalDoctos";
 import Layout from "./components/layout/layout";
 import Cookies from 'js-cookie';
 
@@ -64,6 +65,16 @@ function App() {
             <PrivateRoute>
               <Layout>
                 <PatientInfo />
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/manage-doctors"
+          element={
+            <PrivateRoute>
+              <Layout>
+                <ManageDoctors />
               </Layout>
             </PrivateRoute>
           }

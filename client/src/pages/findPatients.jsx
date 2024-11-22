@@ -20,9 +20,10 @@ const PatientsList = () => {
 
   const token = Cookies.get('jwt');
   const user = jwtDecode(token);
+  const navigate = useNavigate();
 
   if (user.type != 'Hospital') {
-    useNavigate().navigate('/dashboard');
+    navigate('/dashboard');
   }
 
   function handleSearch() {
