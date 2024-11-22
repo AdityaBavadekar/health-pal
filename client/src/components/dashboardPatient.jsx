@@ -25,30 +25,38 @@ const PatientDashboard = () => {
           </h1>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            <div className="bg-white p-6 rounded-xl shadow-md border border-emerald-100 hover:shadow-lg transition-shadow">
-              <div className="flex items-center justify-between mb-4">
-                <Bell className="text-emerald-600 w-8 h-8" />
-                <ChevronRight className="text-emerald-400 w-5 h-5" />
-              </div>
-              <h3
-                className="te.
+            <a href="/reminder">
+              <div className="bg-white p-6 rounded-xl shadow-md border border-emerald-100 hover:shadow-lg transition-shadow">
+                <div className="flex items-center justify-between mb-4">
+                  <Bell className="text-emerald-600 w-8 h-8" />
+                  <ChevronRight className="text-emerald-400 w-5 h-5" />
+                </div>
+                <h3
+                  className="te.
 xt-lg font-semibold text-emerald-900 mb-2"
-              >
-                Set Reminder
-              </h3>
-              <p className="text-emerald-600">Never miss your medicine doses</p>
-            </div>
-
-            <div className="bg-white p-6 rounded-xl shadow-md border border-emerald-100 hover:shadow-lg transition-shadow">
-              <div className="flex items-center justify-between mb-4">
-                <Clock className="text-emerald-600 w-8 h-8" />
-                <ChevronRight className="text-emerald-400 w-5 h-5" />
+                >
+                  Set Reminder
+                </h3>
+                <p className="text-emerald-600">
+                  Never miss your medicine doses
+                </p>
               </div>
-              <h3 className="text-lg font-semibold text-emerald-900 mb-2">
-                Track Medicine
-              </h3>
-              <p className="text-emerald-600">Monitor your medicine routine</p>
-            </div>
+            </a>
+
+            <a href="/reminder">
+              <div className="bg-white p-6 rounded-xl shadow-md border border-emerald-100 hover:shadow-lg transition-shadow">
+                <div className="flex items-center justify-between mb-4">
+                  <Clock className="text-emerald-600 w-8 h-8" />
+                  <ChevronRight className="text-emerald-400 w-5 h-5" />
+                </div>
+                <h3 className="text-lg font-semibold text-emerald-900 mb-2">
+                  Track Medicine
+                </h3>
+                <p className="text-emerald-600">
+                  Monitor your medicine routine
+                </p>
+              </div>
+            </a>
 
             <div className="bg-white p-6 rounded-xl shadow-md border border-emerald-100 hover:shadow-lg transition-shadow">
               <div className="flex items-center justify-between mb-4">

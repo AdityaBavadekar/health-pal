@@ -57,7 +57,7 @@ const RemindersPage = () => {
   };
 
   return (
-    <div className="p-6 min-h-screen bg-background text-foreground">
+    <div className="p-6 min-h-screen bg-background text-foreground bg-gray-100">
       <h1 className="text-3xl font-bold mb-6 text-center">Reminders</h1>
 
       {/* Upcoming Reminders Section */}
@@ -140,14 +140,6 @@ const RemindersPage = () => {
               onChange={handleInputChange}
               className="border rounded-lg px-4 py-2 bg-input text-foreground"
               placeholder="Start Date"
-            />
-            <input // end date
-              type="date"
-              name="endDate"
-              value={newReminder.endDate}
-              onChange={handleInputChange}
-              className="border rounded-lg px-4 py-2 bg-input text-foreground"
-              placeholder="End Date"
             />
           </div>
           <button

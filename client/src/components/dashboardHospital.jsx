@@ -4,6 +4,9 @@ import {
   Pen,
   NotepadText,
   Hospital,
+  Building2,
+  Phone,
+  MapPin,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -32,59 +35,90 @@ const DashboardHospital = () => {
   }, []);
 
   return (
-    <div className="">
-      <h1 className="text-3xl font-bold text-center mb-8 text-gray-800 py-5 bg-gray-100">
-        Hospital Dashboard
-      </h1>
-
-      <div className="grid grid-cols-2 content-center items-center">
-        <div className="bg-gray-100 p-6 rounded-lg shadow-md mb-6 mx-6 gap-4 flex flex-col items-center justify-center h-full">
-          <Hospital height={"62px"} width={"auto"} className="text-gray-700" />
-          <div className="text-center">
-            <h2 className="text-3xl font-bold text-gray-800 mb-3">
-              {hospital.name ? hospital.name : "Hospital Name"}
-            </h2>
-            <p className="text-sm text-gray-600">
-              {hospital.address ? hospital.address : "Hospital Address"}
-            </p>
-            <p className="text-sm text-gray-600">
-              Contact:
-              {hospital.mobileNumber
-                ? ` ${hospital.mobileNumber}`
-                : " Hospital Contact"}
-            </p>
+    <div className="min-h-screen bg-gray-100 flex justify-center items-center">
+      <div className="max-w-7xl mx-auto px-6 py-8">
+        <div className="grid lg:grid-cols-2 gap-8">
+          {/* Hospital Info Card */}
+          <div className="bg-white rounded-xl shadow-lg p-8 border border-emerald-100">
+            <div className="flex flex-col items-center">
+              <div className="bg-emerald-100 p-4 rounded-full mb-6">
+                <Hospital className="w-16 h-16 text-emerald-600" />
+              </div>
+              <h2 className="text-3xl font-bold text-emerald-900 mb-4">
+                {hospital.name ? hospital.name : "Hospital Name"}
+              </h2>
+              <div className="space-y-3 text-center">
+                <div className="flex items-center justify-center gap-2 text-emerald-600">
+                  <MapPin className="w-5 h-5" />
+                  <p className="text-sm">
+                    {hospital.address ? hospital.address : "Hospital Address"}
+                  </p>
+                </div>
+                <div className="flex items-center justify-center gap-2 text-emerald-600">
+                  <Phone className="w-5 h-5" />
+                  <p className="text-sm">
+                    {hospital.mobileNumber
+                      ? hospital.mobileNumber
+                      : "Hospital Contact"}
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div className="grid gap-6 px-6">
-          <Link
-            to="/appointments"
-            className="container bg-gray-100 p-6 rounded-lg shadow-md hover:shadow-lg text-gray-700 transition-shadow flex gap-3 items-center"
-          >
-            <CalendarCheck2 />
-            <p className="text-lg font-semibold">View Appointments</p>
-          </Link>
-          <Link
-            to="/find-patients"
-            className="container bg-gray-100 p-6 rounded-lg shadow-md hover:shadow-lg text-gray-700 transition-shadow flex gap-3 items-center"
-          >
-            <Search />
-            <p className="text-lg font-semibold">Find Patients</p>
-          </Link>
-          <Link
-            to="/patient-summary"
-            className="container bg-gray-100 p-6 rounded-lg shadow-md hover:shadow-lg text-gray-700 transition-shadow flex gap-3 items-center"
-          >
-            <NotepadText />
-            <p className="text-lg font-semibold">View Patient Summary</p>
-          </Link>
-          <Link
-            to="/hospital-doctors"
-            className="container bg-gray-100 p-6 rounded-lg shadow-md hover:shadow-lg text-gray-700 transition-shadow flex gap-3 items-center"
-          >
-            <Pen />
-            <p className="text-lg font-semibold">Add or Update Doctors</p>
-          </Link>
+          {/* Quick Actions Grid */}
+          <div className="grid gap-4">
+            <Link
+              to="/appointments"
+              className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl border border-emerald-100 transition-all duration-300 transform hover:-translate-y-1 flex items-center gap-4 group"
+            >
+              <div className="bg-emerald-100 p-3 rounded-lg group-hover:bg-emerald-200 transition-colors">
+                <CalendarCheck2 className="w-6 h-6 text-emerald-600" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-emerald-900">
+                  View Appointments
+                </h3>
+                <p className="text-emerald-600 text-sm">
+                  Manage patient appointments
+                </p>
+              </div>
+            </Link>
+
+            <Link
+              to="/find-patients"
+              className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl border border-emerald-100 transition-all duration-300 transform hover:-translate-y-1 flex items-center gap-4 group"
+            >
+              <div className="bg-emerald-100 p-3 rounded-lg group-hover:bg-emerald-200 transition-colors">
+                <Search className="w-6 h-6 text-emerald-600" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-emerald-900">
+                  Find Patients
+                </h3>
+                <p className="text-emerald-600 text-sm">
+                  Search and manage patient records
+                </p>
+              </div>
+            </Link>
+
+            <Link
+              to="/hospital-doctors"
+              className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl border border-emerald-100 transition-all duration-300 transform hover:-translate-y-1 flex items-center gap-4 group"
+            >
+              <div className="bg-emerald-100 p-3 rounded-lg group-hover:bg-emerald-200 transition-colors">
+                <Pen className="w-6 h-6 text-emerald-600" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-emerald-900">
+                  Manage Doctors
+                </h3>
+                <p className="text-emerald-600 text-sm">
+                  Add or update doctor information
+                </p>
+              </div>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

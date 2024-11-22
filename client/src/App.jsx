@@ -107,7 +107,14 @@ function App() {
             </PrivateRoute>
           }
         />
-        <Route path="/reminder" element={<RemindersPage />} />
+        <Route
+          path="/reminder"
+          element={
+            <Layout>
+              <RemindersPage />
+            </Layout>
+          }
+        />
         {/* Fallback Routes */}
         <Route path="/not-found" element={<NotFound />} />
         <Route path="/*" element={<Navigate to="/not-found" replace />} />
