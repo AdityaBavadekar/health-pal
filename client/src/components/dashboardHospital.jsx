@@ -11,7 +11,7 @@ import {
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
-import ApiConstants from "../constants/ApiConstants";
+import ApiConstants from "../constants/apiConstants";
 
 const DashboardHospital = () => {
   const [hospital, setHospital] = useState({});
@@ -103,7 +103,7 @@ const DashboardHospital = () => {
             </Link>
 
             <Link
-              to="/hospital-doctors"
+              to="/manage-doctors"
               className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl border border-emerald-100 transition-all duration-300 transform hover:-translate-y-1 flex items-center gap-4 group"
             >
               <div className="bg-emerald-100 p-3 rounded-lg group-hover:bg-emerald-200 transition-colors">
