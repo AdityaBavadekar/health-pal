@@ -15,7 +15,7 @@ import PatientInfo from "./pages/patient";
 import HealthRecords from "./pages/healthRecords";
 import NotFound from "./pages/notFound";
 import PrivateRoute from "./Routes/privateRoute";
-import ManageDoctors from "./pages/hospitalDoctos";
+import ManageDoctors from "../src/pages/hospitalDoctos";
 import Layout from "./components/layout/layout";
 import Cookies from "js-cookie";
 import RemindersPage from "./pages/reminder";
@@ -109,15 +109,6 @@ function App() {
           }
         />
         <Route
-<<<<<<< HEAD
-          path="/reminder"
-          element={
-            <Layout>
-              <RemindersPage />
-            </Layout>
-          }
-        />
-=======
           path="/manage-doctors"
           element={
             <PrivateRoute>
@@ -127,8 +118,17 @@ function App() {
             </PrivateRoute>
           }
         />
-        <Route path="/reminder" element={<RemindersPage />} />
->>>>>>> 774f9ebaf094858d702a0cb8642a7a55b1c73542
+        <Route
+          path="/reminder"
+          element={
+            <PrivateRoute>
+              <Layout>
+                <RemindersPage />
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+
         {/* Fallback Routes */}
         <Route path="/not-found" element={<NotFound />} />
         <Route path="/*" element={<Navigate to="/not-found" replace />} />
