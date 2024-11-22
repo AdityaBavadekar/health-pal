@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 const Home = () => {
     const navigate = useNavigate(); 
     const handleSignUp = () => {
-      navigate('/signup');
+      navigate('signup');
     };
     const handleLogin = () => {
       navigate('/login');
