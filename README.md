@@ -24,3 +24,14 @@ Technologies:
 - Backend - Express, Node Js (For the backend server)
 - AI related tasks - Google Palm API (Text Generation/Summarization, Chatbot), Model 2 (Some model for image captioning task, Image Text Recognition)
 - Database - MongoDB (NoSQL Database)
+
+### Screenshots:
+
+
+| Doctor Dashboard (Dark) | Patient Dashboard (Dark) | Hospital Dashboard (Dark) |
+|--------------------------|--------------------------|----------------------------|
+| ![Doctor Dashboard Dark](https://github.com/user-attachments/assets/b4fabf6d-c540-4208-9f99-10b74f1b31b9) | ![Patient Dashboard Dark](https://github.com/user-attachments/assets/9848a287-0fe9-4885-8b46-07335c2a543e) | ![Hospital Dashboard Dark](https://github.com/user-attachments/assets/f10035cb-52ef-4666-b47a-2709fe5ca193) |
+
+| Doctor Dashboard (Light) | Patient Dashboard (Light) | Hospital Dashboard (Light) |
+|---------------------------|---------------------------|-----------------------------|
+| ![Doctor Dashboard Light](https://github.com/user-attachments/assets/3f0ced23-aa07-4eb6-9985-414132d70acc) | ![Patient Dashboard Light](https://github.com/user-attachments/assets/4094d58a-e9b4-4f50-8993-54cd8eba2373) | ![Hospital Dashboard Light](https://github.com/user-attachments/assets/37aea1ed-f0da-4436-a675-ead22438d2b0) |
