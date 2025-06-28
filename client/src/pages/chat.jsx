@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import Navbar from "../components/layout/navbar";
 
 const Chat = () => {
   const [promptText, setPromptText] = useState("");
@@ -13,7 +12,7 @@ const Chat = () => {
     setLoading(true);
     setError(null);
     try {
-      const API_KEY = "AIzaSyDmi9k71TdMkHW1QwFLGgIlbZd5YwOyqVM";
+      const API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
       if (!API_KEY) throw new Error("API Key not found!");
 
       const genAI = new GoogleGenerativeAI(API_KEY);
@@ -76,11 +75,10 @@ const Chat = () => {
             />
             <button
               onClick={chat}
-              className={`p-2 rounded-lg ${
-                loading
-                  ? "bg-gray-400 text-gray-700"
-                  : "bg-emerald-600 text-white hover:bg-emerald-700"
-              }`}
+              className={`p-2 rounded-lg ${loading
+                ? "bg-gray-400 text-gray-700"
+                : "bg-emerald-600 text-white hover:bg-emerald-700"
+                }`}
               disabled={loading || !promptText.trim()}
             >
               {loading ? "Sending..." : "Send"}
