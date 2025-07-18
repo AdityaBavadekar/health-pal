@@ -204,37 +204,42 @@ export default function Navbar() {
                 </div>
               </SidebarFooter> */}
               <SidebarFooter className="my-2 p-2">
-                <SidebarMenu>
-                  <SidebarMenuItem>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <SidebarMenuButton>
-                          <User2 className="w-6 h-6" />
-                          <div
-                            className={`${open ? "flex" : "hidden"} flex-col`}
-                          >
-                            <h1 className="text-md text-emerald-700 font-semibold">
-                              {data.name}
-                            </h1>
-                            <p className="text-sm text-emerald-600 ">
-                              {data.email}
-                            </p>
-                          </div>
-                          <ChevronUp className="ml-auto" />
-                        </SidebarMenuButton>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent
-                        side="top"
-                        className="w-[--radix-popper-anchor-width]"
-                      >
-                        <DropdownMenuItem>
-                          <button onClick={logout}>Sign out</button>
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </SidebarMenuItem>
-                </SidebarMenu>
-              </SidebarFooter>
+  <SidebarMenu>
+    <SidebarMenuItem>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <SidebarMenuButton className="h-auto p-2 hover:bg-gray-50 rounded-lg transition-colors duration-150">
+            <div className="flex items-center gap-2 w-full">
+              <div className="relative">
+                <User2 className="w-8 h-8 text-emerald-600" />
+                <span className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-500 rounded-full"></span>
+              </div>
+              <div className={`${open ? "flex" : "hidden"} flex-col flex-1 min-w-0`}>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium text-gray-900 truncate">
+                    {data.name}
+                  </span>
+                  <span className="px-2 py-0.5 text-xs bg-emerald-100 text-emerald-700 rounded-full">
+                    Hospital
+                  </span>
+                </div>
+                <span className="text-xs text-gray-500 truncate">
+                  {data.email}
+                </span>
+              </div>
+              <ChevronUp className="w-4 h-4 text-gray-400 shrink-0" />
+            </div>
+          </SidebarMenuButton>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent side="top" className="w-[--radix-popper-anchor-width]">
+          <DropdownMenuItem>
+            <button onClick={logout} className="w-full text-left">Sign out</button>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </SidebarMenuItem>
+  </SidebarMenu>
+</SidebarFooter>
             </Sidebar>
             <button
               onClick={() => setOpen(!open)}
