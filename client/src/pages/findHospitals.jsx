@@ -105,9 +105,6 @@ const HospitalsList = () => {
                 Find <span className="text-emerald-600">Hospitals</span>
               </h1>
             </div>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Discover quality healthcare facilities in your area with our comprehensive hospital directory
-            </p>
           </div>
         </div>
       </div>
