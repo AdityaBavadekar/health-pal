@@ -111,9 +111,9 @@ const SignupDoctor = () => {
   return (
     <div className="w-full flex flex-col justify-center items-center bg-emerald-100 p-3">
       <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-4xl">
-        <h1 className="text-3xl font-bold text-emerald-600 mb-6 text-center">
+        {/* <h1 className="text-3xl font-bold text-emerald-600 mb-6 text-center">
           Doctor Signup
-        </h1>
+        </h1> */}
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -289,7 +289,7 @@ const SignupDoctor = () => {
                 type="submit"
                 className="bg-emerald-600 text-white w-full"
               >
-                Submit
+                Register
               </Button>
             </div>
           </form>
