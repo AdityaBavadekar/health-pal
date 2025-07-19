@@ -1,5 +1,3 @@
-import React from "react";
-import { Link } from "react-router-dom";
 import {
   Bell,
   Calendar,
@@ -7,10 +5,6 @@ import {
   Clock,
   ScanLine,
   ShoppingCart,
-  UserCircle,
-  Settings,
-  LogOut,
-  Activity,
   ChevronRight,
 } from "lucide-react";
 
@@ -82,7 +76,7 @@ xt-lg font-semibold text-emerald-900 mb-2"
                   </p>
                 </div>
               </div>
-              <button className="mt-4 bg-white text-emerald-600 px-4 py-2 rounded-lg font-medium hover:bg-emerald-50 transition-colors">
+              <button type="button" className="mt-4 bg-white text-emerald-600 px-4 py-2 rounded-lg font-medium hover:bg-emerald-50 transition-colors">
                 Scan Now
               </button>
             </div>
@@ -95,7 +89,7 @@ xt-lg font-semibold text-emerald-900 mb-2"
                   <p className="text-emerald-100">Buy medicines online</p>
                 </div>
               </div>
-              <button className="mt-4 bg-white text-emerald-600 px-4 py-2 rounded-lg font-medium hover:bg-emerald-50 transition-colors">
+              <button type="button" className="mt-4 bg-white text-emerald-600 px-4 py-2 rounded-lg font-medium hover:bg-emerald-50 transition-colors">
                 Shop Now
               </button>
             </div>

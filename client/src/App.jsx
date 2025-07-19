@@ -21,7 +21,7 @@ import AppointmentsList from "./pages/appointments";
 import Layout from "./components/layout/layout";
 import Cookies from "js-cookie";
 import RemindersPage from "./pages/reminder";
-import SettingsHospital from "./pages/settingsHospital";
+import SettingsHospital from "./pages/settings";
 import PatientReports from "./pages/patientReports";
 
 function App() {

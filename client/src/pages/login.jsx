@@ -1,13 +1,11 @@
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { User, Stethoscope, Building2, Lock, Heart, Activity, Cross, Shield } from "lucide-react";
-import LoginDoctor from "../components/loginDoctor";
-import LoginPatient from "../components/loginPatient";
-import LoginHospital from "../components/loginHospital";
+import LoginComponent from "../components/loginCom";
 
 const Login = () => {
   const [loginType, setLoginType] = useState("patient");
-  
+
   const userTypes = [
     { key: "doctor", label: "Doctor", icon: Stethoscope },
     { key: "patient", label: "Patient", icon: User },
@@ -22,7 +20,7 @@ const Login = () => {
         <div className="absolute top-20 left-20 w-40 h-40 bg-gradient-to-r from-emerald-200 to-teal-200 rounded-full opacity-40 blur-xl animate-pulse"></div>
         <div className="absolute bottom-20 right-20 w-56 h-56 bg-gradient-to-r from-cyan-200 to-emerald-200 rounded-full opacity-30 blur-2xl animate-pulse delay-1000"></div>
         <div className="absolute top-1/2 left-1/3 w-32 h-32 bg-gradient-to-r from-teal-200 to-cyan-200 rounded-full opacity-35 blur-lg animate-pulse delay-500"></div>
-        
+
         {/* Medical-themed floating elements */}
         <div className="absolute top-32 right-1/4 opacity-20 animate-float">
           <Heart className="w-8 h-8 text-emerald-400" />
@@ -36,11 +34,11 @@ const Login = () => {
         <div className="absolute bottom-1/3 left-20 opacity-20 animate-float-delayed">
           <Shield className="w-7 h-7 text-emerald-400" />
         </div>
-        
+
         {/* Geometric patterns */}
         <div className="absolute top-10 left-1/2 w-24 h-24 border-2 border-emerald-200 rounded-full opacity-30 animate-spin-slow"></div>
         <div className="absolute bottom-10 left-1/3 w-16 h-16 border-2 border-teal-200 rounded-lg opacity-25 animate-spin-reverse"></div>
-        
+
         {/* Subtle grid pattern */}
         <div className="absolute inset-0 opacity-5">
           <div className="w-full h-full" style={{
@@ -67,17 +65,16 @@ const Login = () => {
           <div className="flex bg-gradient-to-r from-gray-50 to-emerald-50/30 rounded-2xl p-2 mb-8 shadow-inner border border-emerald-100/50">
             {userTypes.map(({ key, label, icon: Icon }) => (
               <button
+                type="button"
                 key={key}
-                className={`flex-1 flex items-center justify-center gap-3 py-4 px-6 rounded-xl transition-all duration-300 transform ${
-                  loginType === key
-                    ? "bg-white text-emerald-600 shadow-lg scale-[1.02] font-bold border-2 border-emerald-100"
-                    : "text-gray-600 hover:text-emerald-600 hover:bg-white/50 hover:scale-[1.01]"
-                }`}
+                className={`flex-1 flex items-center justify-center gap-3 py-4 px-6 rounded-xl transition-all duration-300 transform ${loginType === key
+                  ? "bg-white text-emerald-600 shadow-lg scale-[1.02] font-bold border-2 border-emerald-100"
+                  : "text-gray-600 hover:text-emerald-600 hover:bg-white/50 hover:scale-[1.01]"
+                  }`}
                 onClick={() => setLoginType(key)}
               >
-                <Icon className={`w-5 h-5 transition-all duration-300 ${
-                  loginType === key ? "animate-pulse" : ""
-                }`} />
+                <Icon className={`w-5 h-5 transition-all duration-300 ${loginType === key ? "animate-pulse" : ""
+                  }`} />
                 <span className="text-xl font-medium">{label}</span>
               </button>
             ))}
@@ -85,41 +82,9 @@ const Login = () => {
         </div>
 
         {/* Form container with smooth transitions */}
-        <div className="w-full flex justify-center items-center">
-          <div className="w-full transition-all duration-500 ease-in-out transform">
-            {loginType === "doctor" && (
-              <div className="animate-fadeIn">
-                <LoginDoctor />
-              </div>
-            )}
-            {loginType === "patient" && (
-              <div className="animate-fadeIn">
-                <LoginPatient />
-              </div>
-            )}
-            {loginType === "hospital" && (
-              <div className="animate-fadeIn">
-                <LoginHospital />
-              </div>
-            )}
-          </div>
-        </div>
+        <LoginComponent loginType={loginType} />
 
-        {/* Footer */}
-        <div className="mt-8 text-center border-t border-gray-100 pt-6">
-          <p className="text-gray-600">
-            Don't have an account?{" "}
-            <a 
-              href="/signup" 
-              className="text-emerald-600 hover:text-emerald-700 font-semibold transition-colors duration-200 hover:underline"
-            >
-              Sign Up
-            </a>
-          </p>
-        </div>
-      </div>
-
-      <style jsx>{`
+        <style>{`
         @keyframes fadeIn {
           from {
             opacity: 0;
@@ -200,6 +165,7 @@ const Login = () => {
           animation: spin-reverse 15s linear infinite;
         }
       `}</style>
+      </div>
     </div>
   );
 };
