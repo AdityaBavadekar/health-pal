@@ -32,7 +32,11 @@ Technologies:
 |--------------------------|--------------------------|----------------------------|
 | ![Doctor Dashboard Dark](https://github.com/user-attachments/assets/b4fabf6d-c540-4208-9f99-10b74f1b31b9) | ![Patient Dashboard Dark](https://github.com/user-attachments/assets/9848a287-0fe9-4885-8b46-07335c2a543e) | ![Hospital Dashboard Dark](https://github.com/user-attachments/assets/f10035cb-52ef-4666-b47a-2709fe5ca193) | 
 
+<img width="1901" height="1058" alt="image" src="https://github.com/user-attachments/assets/a39cc9ae-5537-4b8c-b093-666f2f1aa875" />
 <img width="1910" height="1054" alt="image" src="https://github.com/user-attachments/assets/8c8590ec-5b6e-430d-bab6-04ade37e5d24" />
+<img width="1912" height="1063" alt="image" src="https://github.com/user-attachments/assets/9c304b59-c24d-40ca-84e3-b3012efa6608" />
+<img width="1908" height="1056" alt="image" src="https://github.com/user-attachments/assets/0b910d58-a60e-46a9-a58d-68376ac381f9" />
+<img width="1902" height="1052" alt="image" src="https://github.com/user-attachments/assets/3770a662-f0cf-4d3a-a400-16902af5fa1a" />
 
 
 | Doctor Dashboard (Light) | Patient Dashboard (Light) | Hospital Dashboard (Light) |
