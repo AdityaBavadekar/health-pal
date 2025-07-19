@@ -1,4 +1,7 @@
-const API_BASE_URL = "https://health-pal-api.onrender.com/api";
+// const API_BASE_URL = "https://health-pal-api.onrender.com/api";
+const API_BASE_URL = process.env.NODE_ENV === 'production'
+? "https://health-pal-backend.vercel.app/api"
+: "http://localhost:5000/api";
 
 const ApiConstants = {
   API_LOGIN_DOCTOR: `${API_BASE_URL}/doctors/login`,
@@ -23,6 +26,12 @@ const ApiConstants = {
   API_HOSPITAL_ADD_DOCTOR: `${API_BASE_URL}/hospitals/add-doctor`,
 
   API_SUMMARY_PATIENT: `${API_BASE_URL}/summary/`,
+  API_CHAT_WITH_REPORTS: `${API_BASE_URL}/chat/with-reports/`,
+  API_CHAT_FOR_PATIENT: `${API_BASE_URL}/chat/for-patient`,
+  API_ALL_REPORTS: `${API_BASE_URL}/reports`,
+  API_UPLOAD_REPORT: `${API_BASE_URL}/reports/upload`,
+  API_DELETE_REPORT: `${API_BASE_URL}/reports/delete`,
+  API_VIEW_REPORT: `${API_BASE_URL}/reports/view`,
 };
 
 export default ApiConstants;

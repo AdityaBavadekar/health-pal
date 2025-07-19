@@ -22,6 +22,7 @@ import Layout from "./components/layout/layout";
 import Cookies from "js-cookie";
 import RemindersPage from "./pages/reminder";
 import SettingsHospital from "./pages/settingsHospital";
+import PatientReports from "./pages/patientReports";
 
 function App() {
   const isAuthenticated = Cookies.get("jwt");
@@ -157,6 +158,16 @@ function App() {
             <PrivateRoute>
               <Layout>
                 <HospitalsList />
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/patient-reports"
+          element={
+            <PrivateRoute>
+              <Layout>
+                <PatientReports />
               </Layout>
             </PrivateRoute>
           }

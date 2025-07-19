@@ -22,6 +22,7 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import ApiConstants from "../constants/apiConstants";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const formSchema = z.object({
   name: z.string().min(2, "Full name must be at least 2 characters."),
