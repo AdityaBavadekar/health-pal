@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Heart, Shield, Calendar, Bell, Users, Phone, Mail, ArrowRight, Sparkles, Zap, CheckCircle } from "lucide-react";
 
 const Home = () => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const [scrollY, setScrollY] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isVisible, setIsVisible] = useState({});
@@ -11,10 +11,10 @@ const Home = () => {
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
     const handleMouseMove = (e) => setMousePos({ x: e.clientX, y: e.clientY });
-    
+
     window.addEventListener("scroll", handleScroll);
     window.addEventListener("mousemove", handleMouseMove);
-    
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("mousemove", handleMouseMove);
@@ -141,6 +141,7 @@ const Home = () => {
           </p>
           <div className="flex justify-center gap-6 flex-wrap">
             <button
+              type="button"
               onClick={handleSignUp}
               className="group bg-emerald-500 text-white px-10 py-5 rounded-full text-lg font-semibold hover:bg-emerald-400 transition-all duration-300 glow-border transform hover:scale-105 hover:shadow-2xl flex items-center gap-3"
             >
@@ -148,6 +149,7 @@ const Home = () => {
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
             <button
+              type="button"
               onClick={handleLogin}
               className="glass-effect text-white px-10 py-5 rounded-full text-lg font-semibold hover:bg-white hover:text-emerald-600 transition-all duration-300 transform hover:scale-105 border-2 border-emerald-300"
             >
@@ -232,6 +234,7 @@ const Home = () => {
               ))}
             </div>
             <button
+              type="button"
               onClick={handleSignUp}
               className="group bg-gradient-to-r from-emerald-500 to-emerald-400 text-white px-12 py-6 rounded-full text-xl font-semibold hover:from-emerald-400 hover:to-emerald-300 transition-all duration-300 transform hover:scale-110 shadow-2xl hover:shadow-emerald-500/50 flex items-center gap-3 mx-auto"
             >
@@ -315,6 +318,7 @@ const Home = () => {
           </p>
           <div className="flex justify-center gap-6 flex-wrap">
             <button
+              type="button"
               onClick={handleSignUp}
               className="group bg-gradient-to-r from-emerald-600 to-emerald-500 text-white px-12 py-6 rounded-full text-xl font-semibold hover:from-emerald-500 hover:to-emerald-400 transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-emerald-500/50 flex items-center gap-3"
             >
@@ -322,6 +326,7 @@ const Home = () => {
               <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
             </button>
             <button
+              type="button"
               onClick={handleLogin}
               className="bg-transparent text-emerald-600 px-12 py-6 rounded-full text-xl font-semibold border-2 border-emerald-600 hover:bg-emerald-600 hover:text-white transition-all duration-300 transform hover:scale-105"
             >

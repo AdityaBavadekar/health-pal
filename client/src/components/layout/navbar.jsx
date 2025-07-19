@@ -22,7 +22,6 @@ import {
   Search,
   Settings,
   Hospital,
-  User,
   SidebarCloseIcon,
   SidebarOpenIcon,
   User2,
@@ -34,8 +33,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useNavigate } from "react-router-dom";
@@ -125,19 +122,21 @@ export default function Navbar() {
           >
             <Sidebar
               collapsible="icon"
-              className={`bg-white text-black h-screen shadow-lg ${
-                open ? "w-64" : "w-fit"
-              } transition-all`}
+              className={`bg-white text-black h-screen shadow-lg ${open ? "w-64" : "w-fit"
+                } transition-all`}
             >
-              <SidebarHeader className="p-4 border-b border-emerald-400 flex gap-2 flex-row justify-start items-center">
-                <Hospital />
-                <h1
-                  className={`text-xl font-bold text-emerald-800 ${
-                    open ? "block" : "hidden"
-                  } transition-all`}
-                >
-                  HealthPal
-                </h1>
+              <SidebarHeader className="flex-row items-center justify-between p-3 border-b border-emerald-400">
+                <div className={`flex gap-2 flex-row justify-start items-center ${open ? "block" : "hidden"} transition-all`}>
+                  <Hospital />
+                  <h1
+                    className={`text-xl font-bold text-emerald-800`}
+                  >
+                    HealthPal
+                  </h1>
+                </div>
+                <div>
+                  <NavbarToggle open={open} setOpen={setOpen} />
+                </div>
               </SidebarHeader>
 
               <SidebarContent className="flex-1 overflow-y-auto">
@@ -147,9 +146,8 @@ export default function Navbar() {
                   </SidebarGroupLabel>
                   <SidebarGroupContent>
                     <SidebarMenu
-                      className={`flex flex-col gap-3 ${
-                        open ? "px-3" : "px-0"
-                      } py-3`}
+                      className={`flex flex-col gap-3 ${open ? "px-3" : "px-0"
+                        } py-3`}
                     >
                       {getSidebarItems().map((item, index) => (
                         <SidebarMenuItem key={item.title}>
@@ -162,9 +160,8 @@ export default function Navbar() {
                                 className={`w-7 h-7 text-emerald-600 `}
                               />
                               <span
-                                className={`font-medium text-lg ${
-                                  open ? "block" : "hidden"
-                                }`}
+                                className={`font-medium text-lg ${open ? "block" : "hidden"
+                                  }`}
                               >
                                 {item.title}
                               </span>
@@ -204,59 +201,69 @@ export default function Navbar() {
                 </div>
               </SidebarFooter> */}
               <SidebarFooter className="my-2 p-2">
-  <SidebarMenu>
-    <SidebarMenuItem>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <SidebarMenuButton className="h-auto p-2 hover:bg-gray-50 rounded-lg transition-colors duration-150">
-            <div className="flex items-center gap-2 w-full">
-              <div className="relative">
-                <User2 className="w-8 h-8 text-emerald-600" />
-                <span className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-500 rounded-full"></span>
-              </div>
-              <div className={`${open ? "flex" : "hidden"} flex-col flex-1 min-w-0`}>
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-gray-900 truncate">
-                    {data.name}
-                  </span>
-                  <span className="px-2 py-0.5 text-xs bg-emerald-100 text-emerald-700 rounded-full">
-                    Hospital
-                  </span>
-                </div>
-                <span className="text-xs text-gray-500 truncate">
-                  {data.email}
-                </span>
-              </div>
-              <ChevronUp className="w-4 h-4 text-gray-400 shrink-0" />
-            </div>
-          </SidebarMenuButton>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent side="top" className="w-[--radix-popper-anchor-width]">
-          <DropdownMenuItem>
-            <button onClick={logout} className="w-full text-left">Sign out</button>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </SidebarMenuItem>
-  </SidebarMenu>
-</SidebarFooter>
+                <SidebarMenu>
+                  <SidebarMenuItem>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <SidebarMenuButton className="h-auto p-2 hover:bg-gray-50 rounded-lg transition-colors duration-150">
+                          <div className="flex items-center gap-2 w-full">
+                            <div className="relative">
+                              <User2 className="w-8 h-8 text-emerald-600" />
+                              <span className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-500 rounded-full"></span>
+                            </div>
+                            <div className={`${open ? "flex" : "hidden"} flex-col flex-1 min-w-0`}>
+                              <div className="flex items-center gap-2">
+                                <span className="text-sm font-medium text-gray-900 truncate">
+                                  {data.name}
+                                </span>
+                                <span className="px-2 py-0.5 text-xs bg-emerald-100 text-emerald-700 rounded-full">
+                                  Hospital
+                                </span>
+                              </div>
+                              <span className="text-xs text-gray-500 truncate">
+                                {data.email}
+                              </span>
+                            </div>
+                            <ChevronUp className="w-4 h-4 text-gray-400 shrink-0" />
+                          </div>
+                        </SidebarMenuButton>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent side="top" className="w-[--radix-popper-anchor-width]">
+                        <DropdownMenuItem>
+                          <button type="button" onClick={logout} className="w-full text-left">Sign out</button>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </SidebarMenuItem>
+                </SidebarMenu>
+              </SidebarFooter>
             </Sidebar>
-            <button
-              onClick={() => setOpen(!open)}
-              aria-label="Toggle Sidebar"
-              className="mt-2 p-2 text-emerald-600 bg-white rounded-full shadow-md hover:bg-emerald-50 transition"
-            >
-              {open ? (
-                <SidebarCloseIcon className="w-6 h-6" />
-              ) : (
-                <SidebarOpenIcon className="w-6 h-6" />
-              )}
-            </button>
+
           </SidebarProvider>
         </div>
       ) : (
         <div></div>
       )}
     </>
+  );
+}
+
+export function NavbarToggle({ open, setOpen }) {
+  return (
+    <button
+      type="button"
+      onClick={() => setOpen(!open)}
+      aria-label="Toggle Sidebar"
+      className={`text-emerald-600 
+        bg-white/70 backdrop-blur-md 
+        hover:bg-white/90 
+        transition`}
+    >
+      {open ? (
+        <SidebarCloseIcon className="w-6 h-6" />
+      ) : (
+        <SidebarOpenIcon />
+      )}
+    </button>
   );
 }
