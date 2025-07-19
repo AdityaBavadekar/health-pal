@@ -76,9 +76,9 @@ const SignupPatient = () => {
   return (
     <div className="w-full flex flex-col justify-center items-center bg-emerald-100 p-3">
       <div className="bg-white shadow-md rounded-lg p-8 w-full">
-        <h1 className="text-3xl font-bold text-emerald-600 mb-6">
+        {/* <h1 className="text-3xl font-bold text-emerald-600 mb-6">
           Patient Signup
-        </h1>
+        </h1> */}
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}

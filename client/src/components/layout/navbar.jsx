@@ -255,19 +255,7 @@ export default function Navbar() {
           </SidebarProvider>
         </div>
       ) : (
-        <div className="fixed top-0 left-0 w-full bg-emerald-600 text-white p-4 shadow-md z-50">
-          <div className="flex items-center justify-between w-[80%] mx-auto">
-            <h1 className="text-xl font-bold">HealthPal</h1>
-            <div className="flex gap-4">
-              <a href="/login" className="text-white hover:underline">
-                Login
-              </a>
-              <a href="/signup" className="text-white hover:underline">
-                Signup
-              </a>
-            </div>
-          </div>
-        </div>
+        <div></div>
       )}
     </>
   );

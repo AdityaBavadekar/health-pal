@@ -65,9 +65,9 @@ const LoginDoctor = () => {
   return (
     <div className="w-full bg-emerald-100 p-3 flex justify-center items-center">
       <div className="bg-white shadow-md rounded-lg p-8 w-full">
-        <h1 className="text-3xl font-bold text-emerald-600 mb-6">
+        {/* <h1 className="text-3xl font-bold text-emerald-600 mb-6">
           Doctor Login
-        </h1>
+        </h1> */}
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
@@ -96,11 +96,11 @@ const LoginDoctor = () => {
                 </FormItem>
               )}
             />
-            <h1>
+            {/* <h1>
               Not a user? <a href="/signup">SignUp</a>
-            </h1>
-            <Button type="submit" className="bg-emerald-600 text-white">
-              Submit
+            </h1> */}
+            <Button type="submit" className="bg-emerald-600 text-white w-full">
+              Login
             </Button>
           </form>
         </Form>
